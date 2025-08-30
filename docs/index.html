@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicting Antimicrobial Resistance using Deep Learning</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #0d71b8;
+            --primary-dark: #0a5a94;
+            --accent-color: #28a745;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --border-color: #dee2e6;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.16);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        nav.scrolled {
+            box-shadow: var(--shadow-md);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(13, 113, 184, 0.05) 0%, rgba(40, 167, 69, 0.05) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(13, 113, 184, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+        
+        .hero-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+            max-width: 800px;
+            margin-bottom: 2rem;
+            text-align: justify;
+        }
+        
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 600px;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+        
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+        }
+        
+        /* Dataset Section */
+        .dataset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .species-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+        
+        .species-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .species-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+        }
+        
+        .species-content {
+            padding: 1.5rem;
+        }
+        
+        .fcgr-preview {
+            background: var(--bg-color);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+        
+        .fcgr-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .fcgr-image-card {
+            text-align: center;
+        }
+        
+        .fcgr-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Results Section */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .result-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+        
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .result-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        /* Demo Section */
+        .demo-container {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .architecture-diagram {
+            background: var(--bg-color);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .demo-video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            margin: 2rem 0;
+        }
+        
+        .demo-video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
+        }
+        
+        .demo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .demo-link:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* Table Styles */
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .performance-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .performance-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+        
+        .performance-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .performance-table tr:hover {
+            background: var(--bg-color);
+        }
+        
+        /* Notebooks Section */
+        .notebooks-table {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .notebooks-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .notebooks-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .notebooks-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .notebooks-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .notebooks-table tr:hover {
+            background: var(--bg-color);
+        }
+        
+        .notebook-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .notebook-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .team-member {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .member-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+        
+        .member-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .member-role {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .member-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .member-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--primary-color);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .member-links a:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--text-primary);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .performance-table {
+                font-size: 0.8rem;
+            }
+            
+            .performance-table th,
+            .performance-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">AMR Prediction</div>
+            <ul class="nav-links">
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#dataset">Dataset</a></li>
+                <li><a href="#results">Results</a></li>
+                <li><a href="#demo">Demo</a></li>
+                <li><a href="#paper">Paper</a></li>
+                <li><a href="#notebooks">Notebooks</a></li>
+                <li><a href="#team">Team</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="overview">
+        <div class="hero-content">
+            <h1>Predicting Antimicrobial Resistance using Deep Learning</h1>
+            <p class="hero-subtitle">A Species-Agnostic Approach Using Whole Genome Sequences</p>
+            <p class="hero-description">
+                We developed a cutting-edge deep learning framework that predicts antimicrobial resistance (AMR) 
+                directly from bacterial whole genome sequences. By transforming genomic data into images using 
+                Frequency Chaos Game Representation (FCGR), our models achieve state-of-the-art accuracy across 
+                multiple bacterial species and antibiotics, offering a rapid, scalable solution to combat the 
+                global AMR crisis.
+            </p>
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Bacterial Species</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">20K+</div>
+                    <div class="stat-label">Genome Samples</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">95%+</div>
+                    <div class="stat-label">Peak Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">66</div>
+                    <div class="stat-label">Antibiotics Tested</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dataset Section -->
+    <section id="dataset">
+        <h2 class="section-title">Dataset & Methodology</h2>
+        <p class="section-subtitle">Comprehensive genomic data from multiple sources, transformed for deep learning</p>
+        
+        <div class="dataset-grid">
+            <div class="species-card">
+                <div class="species-header">Staphylococcus aureus</div>
+                <div class="species-content">
+                    <p><strong>Samples:</strong> 3,957</p>
+                    <p><strong>Source:</strong> NCBI, PATRIC</p>
+                    <p><strong>Performance:</strong> >90% accuracy</p>
+                    <p><strong>Antibiotics:</strong> 14 drugs tested</p>
+                </div>
+            </div>
+            <div class="species-card">
+                <div class="species-header">Salmonella enterica</div>
+                <div class="species-content">
+                    <p><strong>Samples:</strong> 5,278</p>
+                    <p><strong>Source:</strong> PRJNA292661</p>
+                    <p><strong>Performance:</strong> >95% accuracy</p>
+                    <p><strong>Antibiotics:</strong> 15 drugs tested</p>
+                </div>
+            </div>
+            <div class="species-card">
+                <div class="species-header">Escherichia coli</div>
+                <div class="species-content">
+                    <p><strong>Samples:</strong> 2,959</p>
+                    <p><strong>Source:</strong> NCBI, PATRIC</p>
+                    <p><strong>Performance:</strong> 82% accuracy</p>
+                    <p><strong>Antibiotics:</strong> 12 drugs tested</p>
+                </div>
+            </div>
+            <div class="species-card">
+                <div class="species-header">Klebsiella pneumoniae</div>
+                <div class="species-content">
+                    <p><strong>Samples:</strong> 1,667</p>
+                    <p><strong>Source:</strong> PRJEB27342</p>
+                    <p><strong>Performance:</strong> 83% accuracy</p>
+                    <p><strong>Antibiotics:</strong> 10 drugs tested</p>
+                </div>
+            </div>
+            <div class="species-card">
+                <div class="species-header">Mycobacterium tuberculosis</div>
+                <div class="species-content">
+                    <p><strong>Samples:</strong> 5,241</p>
+                    <p><strong>Source:</strong> NCBI</p>
+                    <p><strong>Performance:</strong> 72% accuracy</p>
+                    <p><strong>Antibiotics:</strong> 8 drugs tested</p>
+                </div>
+            </div>
+            <div class="species-card">
+                <div class="species-header">Acinetobacter baumannii</div>
+                <div class="species-content">
+                    <p><strong>Samples:</strong> 1,076</p>
+                    <p><strong>Source:</strong> PRJNA1014981</p>
+                    <p><strong>Performance:</strong> 88% accuracy</p>
+                    <p><strong>Antibiotics:</strong> 7 drugs tested</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="fcgr-preview card">
+            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">FCGR Transformation</h3>
+            <p style="margin-bottom: 1.5rem;">
+                We use Frequency Chaos Game Representation (FCGR) to transform variable-length genomic sequences 
+                into fixed-size 256×256 grayscale images based on 8-mer frequencies. This alignment-free approach 
+                preserves biological information while enabling the use of powerful computer vision architectures.
+            </p>
+            <div class="fcgr-images">
+                <div class="fcgr-image-card">
+                    <div class="fcgr-image" style="background: linear-gradient(45deg, #e0e0e0, #f0f0f0);"></div>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary);">S. aureus FCGR</p>
+                </div>
+                <div class="fcgr-image-card">
+                    <div class="fcgr-image" style="background: linear-gradient(135deg, #d0d0d0, #e8e8e8);"></div>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary);">E. coli FCGR</p>
+                </div>
+                <div class="fcgr-image-card">
+                    <div class="fcgr-image" style="background: linear-gradient(225deg, #e5e5e5, #f5f5f5);"></div>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary);">Salmonella FCGR</p>
+                </div>
+            </div>
+            <p style="margin-top: 1.5rem;">
+                <strong>Data Processing Pipeline:</strong> FASTA sequences → 8-mer extraction → 
+                FCGR encoding → 256×256 images → ResNet18 CNN
+            </p>
+            <p style="margin-top: 1rem;">
+                <strong>Key Features:</strong> Homology-aware splitting (95-98% similarity threshold), 
+                masked evaluation metrics, 5-fold cross-validation with GroupKFold
+            </p>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results">
+        <h2 class="section-title">Results & Performance</h2>
+        <p class="section-subtitle">Comprehensive evaluation across species and resistance mechanisms</p>
+        
+        <div class="results-grid">
+            <div class="result-card">
+                <h3>Species-Specific Models</h3>
+                <p style="margin-bottom: 1rem;">
+                    Individual models trained for each species demonstrated robust performance, 
+                    with accuracy ranging from 72% (M. tuberculosis) to 95% (Salmonella enterica).
+                </p>
+                <ul style="line-height: 1.8; padding-left: 1.5rem;">
+                    <li><strong>Salmonella enterica:</strong> 95.0% accuracy, 96.6% F1-score</li>
+                    <li><strong>Staphylococcus aureus:</strong> 83.9% accuracy, 69.5% F1-score</li>
+                    <li><strong>Acinetobacter baumannii:</strong> 88.3% accuracy, 57.2% F1-score</li>
+                    <li><strong>Escherichia coli:</strong> 81.6% accuracy, 51.8% F1-score</li>
+                </ul>
+            </div>
+            
+            <div class="result-card">
+                <h3>Species-Agnostic Model</h3>
+                <p style="margin-bottom: 1rem;">
+                    The unified model trained on three species achieved exceptional performance 
+                    while maintaining generalizability across bacterial pathogens.
+                </p>
+                <ul style="line-height: 1.8; padding-left: 1.5rem;">
+                    <li><strong>Overall Accuracy:</strong> 91.3%</li>
+                    <li><strong>Precision:</strong> 93.0%</li>
+                    <li><strong>Recall:</strong> 93.2%</li>
+                    <li><strong>F1-Score:</strong> 92.9%</li>
+                    <li><strong>AUC:</strong> 95.2%</li>
+                </ul>
+            </div>
+            
+            <div class="result-card">
+                <h3>Clinical Significance</h3>
+                <p style="margin-bottom: 1rem;">
+                    Our models consistently outperformed traditional rule-based systems 
+                    like ABRicate across all tested species and antibiotics.
+                </p>
+                <ul style="line-height: 1.8; padding-left: 1.5rem;">
+                    <li><strong>Speed:</strong> Predictions in minutes vs. hours/days</li>
+                    <li><strong>Coverage:</strong> Novel resistance patterns detected</li>
+                    <li><strong>Scalability:</strong> Database-independent approach</li>
+                    <li><strong>Reliability:</strong> High precision reduces false positives</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card" style="margin: 3rem 0;">
+            <h3 style="margin-bottom: 1.5rem;">Detailed Performance Metrics</h3>
+            <table class="performance-table">
+                <thead>
+                    <tr>
+                        <th>Species</th>
+                        <th>Accuracy</th>
+                        <th>Precision</th>
+                        <th>Recall</th>
+                        <th>F1-Score</th>
+                        <th>AUC</th>
+                        <th>MCC</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><em>Salmonella enterica</em></td>
+                        <td>95.05%</td>
+                        <td>97.16%</td>
+                        <td>95.89%</td>
+                        <td>96.60%</td>
+                        <td>95.73%</td>
+                        <td>0.76</td>
+                    </tr>
+                    <tr>
+                        <td><em>Acinetobacter baumannii</em></td>
+                        <td>88.27%</td>
+                        <td>62.11%</td>
+                        <td>55.40%</td>
+                        <td>57.23%</td>
+                        <td>85.42%</td>
+                        <td>0.44</td>
+                    </tr>
+                    <tr>
+                        <td><em>Staphylococcus aureus</em></td>
+                        <td>83.85%</td>
+                        <td>76.70%</td>
+                        <td>66.67%</td>
+                        <td>69.54%</td>
+                        <td>67.41%</td>
+                        <td>0.45</td>
+                    </tr>
+                    <tr>
+                        <td><em>Klebsiella pneumoniae</em></td>
+                        <td>82.75%</td>
+                        <td>53.87%</td>
+                        <td>57.55%</td>
+                        <td>55.25%</td>
+                        <td>83.78%</td>
+                        <td>0.37</td>
+                    </tr>
+                    <tr>
+                        <td><em>Escherichia coli</em></td>
+                        <td>81.56%</td>
+                        <td>52.24%</td>
+                        <td>53.61%</td>
+                        <td>51.75%</td>
+                        <td>79.88%</td>
+                        <td>0.34</td>
+                    </tr>
+                    <tr>
+                        <td><em>Mycobacterium tuberculosis</em></td>
+                        <td>72.42%</td>
+                        <td>68.82%</td>
+                        <td>75.77%</td>
+                        <td>69.12%</td>
+                        <td>69.30%</td>
+                        <td>0.32</td>
+                    </tr>
+                    <tr style="background: rgba(13, 113, 184, 0.1); font-weight: 600;">
+                        <td><strong>Species-Agnostic Model</strong></td>
+                        <td><strong>91.25%</strong></td>
+                        <td><strong>92.96%</strong></td>
+                        <td><strong>93.23%</strong></td>
+                        <td><strong>92.89%</strong></td>
+                        <td><strong>95.16%</strong></td>
+                        <td><strong>0.85</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo">
+        <h2 class="section-title">Model Architecture & Demo</h2>
+        <p class="section-subtitle">Modified ResNet18 architecture trained on FCGR images</p>
+        
+        <div class="demo-container">
+            <div class="architecture-diagram">
+                <h3 style="margin-bottom: 1rem;">ResNet18 Architecture</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    We employ a modified ResNet18 architecture with custom input layer for grayscale FCGR images 
+                    and adapted output layer for multi-drug resistance prediction.
+                </p>
+                <div style="background: white; padding: 2rem; border-radius: 8px; border: 2px solid var(--border-color);">
+                    <p><strong>Input:</strong> 256×256 grayscale FCGR image</p>
+                    <p><strong>Architecture:</strong> ResNet18 (modified first conv layer)</p>
+                    <p><strong>Output:</strong> Multi-label classification (R/S per drug)</p>
+                    <p><strong>Training:</strong> 5-fold cross-validation, masked metrics</p>
+                    <p><strong>Optimization:</strong> Adam optimizer, weighted loss for class imbalance</p>
+                </div>
+            </div>
+            
+            <h3 style="margin: 2rem 0 1rem;">Interactive Demo</h3>
+            <p>Upload a bacterial genome and get instant AMR predictions across multiple antibiotics!</p>
+            
+            <div class="demo-video-wrapper">
+                <div style="background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); 
+                            display: flex; align-items: center; justify-content: center; 
+                            height: 100%; color: white; font-size: 1.5rem; flex-direction: column; gap: 1rem;">
+                    <div>🧬 Interactive AMR Prediction Demo</div>
+                    <div style="font-size: 1rem; opacity: 0.9;">Coming Soon on Hugging Face Spaces</div>
+                </div>
+            </div>
+            
+            <a href="https://huggingface.co/spaces/saifelden/amr-prediction" class="demo-link" target="_blank">
+                🚀 Launch Interactive Demo (Coming Soon)
+            </a>
+        </div>
+    </section>
+
+    <!-- Paper Section -->
+    <section id="paper">
+        <h2 class="section-title">Scientific Paper</h2>
+        <p class="section-subtitle">Read our complete research findings and methodology</p>
+        
+        <div class="card">
+            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">
+                Predicting Antimicrobial Resistance using Whole Genome Sequence Data: 
+                A Deep Learning Approach
+            </h3>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                <em>Saifelden Mohamed, Mariam Ismael, Salma Hatem</em><br>
+                Zewail City of Science and Technology, 2025
+            </p>
+            <div style="background: var(--bg-color); padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0;">
+                <h4 style="margin-bottom: 1rem;">Abstract</h4>
+                <p style="line-height: 1.8; text-align: justify;">
+                    Antimicrobial resistance (AMR) poses a significant global health threat. We present a comprehensive 
+                    deep learning framework for predicting AMR directly from bacterial whole genome sequences using 
+                    Frequency Chaos Game Representation (FCGR). Our approach achieved accuracies ranging from 72% to 95% 
+                    across 66 antibiotics and 6 bacterial species, with a species-agnostic model demonstrating 91% accuracy. 
+                    This work contributes to rapid AMR screening in clinical settings.
+                </p>
+            </div>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="#" class="demo-link" style="background: var(--primary-color);">
+                    📄 Read Preprint (Submitted)
+                </a>
+                <a href="CIE555__Scientific_Paper_Draft.pdf" class="demo-link" style="background: var(--text-secondary);">
+                    ⬇️ Download Draft PDF
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Notebooks Section -->
+    <section id="notebooks">
+        <h2 class="section-title">Research Pipeline & Notebooks</h2>
+        <p class="section-subtitle">Complete computational pipeline from raw data to predictions</p>
+        
+        <div class="notebooks-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pipeline Stage</th>
+                        <th>Description</th>
+                        <th>Notebook</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Data Collection</strong></td>
+                        <td>Automated download of WGS from NCBI/PATRIC databases</td>
+                        <td><a href="https://colab.research.google.com/drive/1zF_EdIyBJryyRerfMBpm5gvlxx8uiz65" class="notebook-link" target="_blank">Download Script</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data Processing</strong></td>
+                        <td>Create master table linking genomes to resistance profiles</td>
+                        <td><a href="https://colab.research.google.com/drive/1dhboCENastOxyPSaOhRuYQfQ6jTG54XH" class="notebook-link" target="_blank">Master Table Creation</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>FCGR Encoding</strong></td>
+                        <td>Transform FASTA sequences to 256×256 FCGR images</td>
+                        <td><a href="https://colab.research.google.com/drive/1KT3IifghuhJ8cfU4x7zERPTlFaYRUtWp" class="notebook-link" target="_blank">FCGR Transformation</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Drug Selection</strong></td>
+                        <td>Filter drugs based on data quality and balance metrics</td>
+                        <td><a href="https://colab.research.google.com/drive/1Bad4Pw5tKiPYJM2SPluJbXt4MpBUEFPj" class="notebook-link" target="_blank">Drug Filtering</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Homology Splitting</strong></td>
+                        <td>Cluster-aware train/test split to prevent data leakage</td>
+                        <td><a href="https://colab.research.google.com/drive/11sSRr6gM8QC1sHBjLHbb2NfhHqvU5tey" class="notebook-link" target="_blank">Sourmash Clustering</a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Model Training</strong></td>
+                        <td>ResNet18 training with cross-validation and masked metrics</td>
+                        <td><a href="https://colab.research.google.com/drive/1zvtU66M9qVdQMwCIlHlQ5-6QI3M-vTHz" class="notebook-link" target="_blank">Training Pipeline</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="card" style="margin-top: 2rem;">
+            <h3 style="margin-bottom: 1rem;">Key Pipeline Features</h3>
+            <ul style="line-height: 1.8; padding-left: 1.5rem;">
+                <li><strong>Homology-aware splitting:</strong> 95-98% similarity threshold using Sourmash (k=31) to prevent data leakage</li>
+                <li><strong>Balanced dataset curation:</strong> R/S ratio between 0.3-3.0, minimum 1000 samples per class</li>
+                <li><strong>Masked metrics:</strong> Custom evaluation metrics that ignore NULL values in multi-label predictions</li>
+                <li><strong>5-fold cross-validation:</strong> Robust performance estimation with GroupKFold</li>
+                <li><strong>Class weighting:</strong> Positive weights applied during training to handle imbalanced classes</li>
+            </ul>
+            
+            <div style="margin-top: 2rem; padding: 1.5rem; background: var(--bg-color); border-radius: 8px;">
+                <h4 style="margin-bottom: 1rem;">Complete Dataset Access</h4>
+                <p style="margin-bottom: 1rem;">
+                    Access our complete research pipeline and processed datasets through Google Drive:
+                </p>
+                <a href="https://drive.google.com/drive/folders/13LGqe__ULhjG0hZmpgxz8WqE0fNXsVNQ?usp=drive_link" 
+                   class="notebook-link" target="_blank">
+                    📁 Complete Research Drive
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team">
+        <h2 class="section-title">Meet the Team</h2>
+        <p class="section-subtitle">Researchers from Zewail City of Science and Technology</p>
+        
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="member-avatar">SM</div>
+                <h3 class="member-name">Saifelden Mohamed</h3>
+                <p class="member-role">Lead Researcher</p>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                    Deep Learning & Bioinformatics<br>
+                    Student ID: 202100432
+                </p>
+                <div class="member-links">
+                    <a href="#" target="_blank">LinkedIn</a>
+                    <a href="#" target="_blank">GitHub</a>
+                </div>
+            </div>
+            
+            <div class="team-member">
+                <div class="member-avatar">MI</div>
+                <h3 class="member-name">Mariam Ismael</h3>
+                <p class="member-role">Co-Researcher</p>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                    Genomic Data Analysis<br>
+                    Student ID: 202101506
+                </p>
+                <div class="member-links">
+                    <a href="#" target="_blank">LinkedIn</a>
+                    <a href="#" target="_blank">GitHub</a>
+                </div>
+            </div>
+            
+            <div class="team-member">
+                <div class="member-avatar">SH</div>
+                <h3 class="member-name">Salma Hatem</h3>
+                <p class="member-role">Co-Researcher</p>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                    Machine Learning & Visualization<br>
+                    Student ID: 202100381
+                </p>
+                <div class="member-links">
+                    <a href="#" target="_blank">LinkedIn</a>
+                    <a href="#" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="margin-top: 3rem; text-align: center;">
+            <h3 style="margin-bottom: 1rem;">Course Information</h3>
+            <p style="color: var(--text-secondary);">
+                This research was conducted as part of the Deep Learning course (CIE 555) at 
+                Zewail City of Science and Technology, May 2025.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p style="margin-bottom: 1rem;">© 2025 AMR Prediction Project - Zewail City of Science and Technology</p>
+            <p style="font-size: 0.9rem; opacity: 0.8;">
+                Advancing the fight against antimicrobial resistance through artificial intelligence
+            </p>
+            <div style="margin-top: 2rem;">
+                <a href="https://github.com/saifeldeen91/amr-prediction" target="_blank" 
+                   style="color: white; text-decoration: none; margin: 0 1rem;">
+                    📦 GitHub Repository
+                </a>
+                <a href="https://drive.google.com/drive/folders/13LGqe__ULhjG0hZmpgxz8WqE0fNXsVNQ?usp=drive_link" 
+                   target="_blank" style="color: white; text-decoration: none; margin: 0 1rem;">
+                    📁 Research Data
+                </a>
+                <a href="mailto:saifelden.mohamed@zewailcity.edu.eg" 
+                   style="color: white; text-decoration: none; margin: 0 1rem;">
+                    ✉️ Contact Us
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navigation shadow on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 10) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Animate cards on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and animate them
+        document.querySelectorAll('.stat-card, .species-card, .result-card, .card, .team-member').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Add some interactive features
+        document.querySelectorAll('.species-card, .result-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.borderLeft = '4px solid var(--primary-color)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.borderLeft = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
