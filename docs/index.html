@@ -221,6 +221,54 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
+
+        /* Quick Access Links */
+        .quick-access {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .access-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .access-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .access-button.secondary {
+            background: var(--accent-color);
+        }
+
+        .access-button.secondary:hover {
+            background: #1b5e20;
+        }
+
+        .access-button.tertiary {
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .access-button.tertiary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
         
         /* Section Styles */
         section {
@@ -622,6 +670,10 @@
             .fcgr-grid {
                 grid-template-columns: 1fr;
             }
+
+            .quick-access {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -657,25 +709,32 @@
             <div class="abstract-section">
                 <div class="abstract-label">Abstract</div>
                 <p class="hero-description">
-                    Antimicrobial resistance (AMR) poses a critical threat to global public health, necessitating rapid and accurate diagnostic methods. We present a comprehensive deep learning framework for predicting antimicrobial resistance directly from bacterial whole genome sequences. Our approach employs Frequency Chaos Game Representation (FCGR) to transform variable-length genomic sequences into fixed-size numerical representations suitable for convolutional neural network analysis. Using a modified ResNet18 architecture, we evaluated our model across six clinically relevant bacterial species: <em>Staphylococcus aureus</em>, <em>Salmonella enterica</em>, <em>Escherichia coli</em>, <em>Klebsiella pneumoniae</em>, <em>Mycobacterium tuberculosis</em>, and <em>Acinetobacter baumannii</em>. The framework achieved accuracies ranging from 72% to 95% across 66 antibiotics, with particularly strong performance for <em>S. enterica</em> (>95% accuracy). Our species-agnostic model demonstrated 91% accuracy, suggesting potential for generalized AMR detection across diverse bacterial pathogens. This work contributes to the growing body of evidence supporting machine learning approaches for rapid AMR screening in clinical settings.
+                    Antimicrobial resistance (AMR) poses a critical threat to global public health, necessitating rapid and accurate diagnostic methods. We present a comprehensive deep learning framework for predicting antimicrobial resistance directly from bacterial whole genome sequences. Our approach employs Frequency Chaos Game Representation (FCGR) to transform variable-length genomic sequences into fixed-size numerical representations suitable for convolutional neural network analysis. Using a modified ResNet18 architecture, we evaluated our model across three clinically relevant bacterial species: <em>Staphylococcus aureus</em>, <em>Salmonella enterica</em>, and <em>Escherichia coli</em>. The framework achieved accuracies ranging from [TO BE UPDATED] across [TO BE UPDATED] antibiotics, with particularly strong performance for <em>[TO BE UPDATED]</em>. Our species-agnostic model demonstrated [TO BE UPDATED]% accuracy, suggesting potential for generalized AMR detection across diverse bacterial pathogens. This work contributes to the growing body of evidence supporting machine learning approaches for rapid AMR screening in clinical settings.
                 </p>
+            </div>
+
+            <!-- Quick Access Links -->
+            <div class="quick-access">
+                <a href="#" class="access-button">📄 Read Preprint (bioRxiv)</a>
+                <a href="#" class="access-button secondary">🚀 Try Interactive Demo</a>
+                <a href="#resources" class="access-button tertiary">💻 View Code & Data</a>
             </div>
             
             <div class="key-metrics">
                 <div class="metric-item">
-                    <div class="metric-value">20,178</div>
+                    <div class="metric-value">[TBD]</div>
                     <div class="metric-label">Bacterial Genomes Analyzed</div>
                 </div>
                 <div class="metric-item">
-                    <div class="metric-value">6</div>
+                    <div class="metric-value">3</div>
                     <div class="metric-label">Bacterial Species</div>
                 </div>
                 <div class="metric-item">
-                    <div class="metric-value">66</div>
+                    <div class="metric-value">[TBD]</div>
                     <div class="metric-label">Antibiotics Tested</div>
                 </div>
                 <div class="metric-item">
-                    <div class="metric-value">95%</div>
+                    <div class="metric-value">[TBD]%</div>
                     <div class="metric-label">Peak Accuracy</div>
                 </div>
             </div>
@@ -723,50 +782,29 @@
                 <tbody>
                     <tr>
                         <td><em>Staphylococcus aureus</em></td>
-                        <td>3,957</td>
+                        <td>[TBD]</td>
                         <td>NCBI, PATRIC</td>
-                        <td>14</td>
-                        <td>90.3 ± 2.1</td>
+                        <td>[TBD]</td>
+                        <td>[TBD] ± [TBD]</td>
                     </tr>
                     <tr>
                         <td><em>Salmonella enterica</em></td>
-                        <td>5,278</td>
+                        <td>[TBD]</td>
                         <td>PRJNA292661</td>
-                        <td>15</td>
-                        <td>95.1 ± 1.8</td>
+                        <td>[TBD]</td>
+                        <td>[TBD] ± [TBD]</td>
                     </tr>
                     <tr>
                         <td><em>Escherichia coli</em></td>
-                        <td>2,959</td>
+                        <td>[TBD]</td>
                         <td>NCBI, PATRIC</td>
-                        <td>12</td>
-                        <td>82.4 ± 3.2</td>
-                    </tr>
-                    <tr>
-                        <td><em>Klebsiella pneumoniae</em></td>
-                        <td>1,667</td>
-                        <td>PRJEB27342</td>
-                        <td>10</td>
-                        <td>83.7 ± 2.9</td>
-                    </tr>
-                    <tr>
-                        <td><em>Mycobacterium tuberculosis</em></td>
-                        <td>5,241</td>
-                        <td>NCBI</td>
-                        <td>8</td>
-                        <td>72.1 ± 4.1</td>
-                    </tr>
-                    <tr>
-                        <td><em>Acinetobacter baumannii</em></td>
-                        <td>1,076</td>
-                        <td>PRJNA1014981</td>
-                        <td>7</td>
-                        <td>88.2 ± 2.5</td>
+                        <td>[TBD]</td>
+                        <td>[TBD] ± [TBD]</td>
                     </tr>
                 </tbody>
             </table>
             <div class="figure-caption">
-                <strong>Table 1.</strong> Summary of bacterial species included in the study with corresponding sample sizes, data sources, number of antibiotics tested, and mean classification accuracy with standard deviation across 5-fold cross-validation.
+                <strong>Table 1.</strong> Summary of the three bacterial species included in the final study with corresponding sample sizes, data sources, number of antibiotics tested, and mean classification accuracy with standard deviation across 5-fold cross-validation.
             </div>
         </div>
 
@@ -782,15 +820,15 @@
                 </div>
                 <div class="fcgr-item">
                     <div class="fcgr-placeholder"></div>
-                    <p class="fcgr-label">E. coli FCGR pattern</p>
+                    <p class="fcgr-label">S. enterica FCGR pattern</p>
                 </div>
                 <div class="fcgr-item">
                     <div class="fcgr-placeholder"></div>
-                    <p class="fcgr-label">M. tuberculosis FCGR pattern</p>
+                    <p class="fcgr-label">E. coli FCGR pattern</p>
                 </div>
             </div>
             <div class="figure-caption">
-                <strong>Figure 1.</strong> Representative FCGR images for three bacterial species showing distinct genomic signatures. Each pixel intensity represents the normalized frequency of a specific 8-mer sequence.
+                <strong>Figure 1.</strong> Representative FCGR images for the three bacterial species showing distinct genomic signatures. Each pixel intensity represents the normalized frequency of a specific 8-mer sequence.
             </div>
         </div>
     </section>
@@ -805,19 +843,19 @@
         <div class="results-grid">
             <div class="result-card">
                 <h4>Species-Specific Models</h4>
-                <p>Individual models trained for each species demonstrated robust performance with accuracies ranging from 72% (<em>M. tuberculosis</em>) to 95% (<em>S. enterica</em>). The variation in performance correlates with dataset size, genomic complexity, and the quality of phenotypic annotations.</p>
+                <p>Individual models trained for each species demonstrated robust performance with accuracies ranging from [TBD]% to [TBD]%. The variation in performance correlates with dataset size, genomic complexity, and the quality of phenotypic annotations.</p>
                 <ul style="margin-top: 1rem; padding-left: 1.5rem; line-height: 1.8;">
-                    <li>Gram-positive bacteria: 85-90% mean accuracy</li>
-                    <li>Gram-negative bacteria: 82-95% mean accuracy</li>
-                    <li>Mycobacteria: 72% mean accuracy</li>
+                    <li><em>Staphylococcus aureus</em>: [TBD]% mean accuracy</li>
+                    <li><em>Salmonella enterica</em>: [TBD]% mean accuracy</li>
+                    <li><em>Escherichia coli</em>: [TBD]% mean accuracy</li>
                 </ul>
             </div>
             <div class="result-card">
                 <h4>Species-Agnostic Model</h4>
-                <p>The unified model trained on all species achieved 91% overall accuracy, demonstrating the potential for developing generalized AMR prediction systems. Key findings include:</p>
+                <p>The unified model trained on all three species achieved [TBD]% overall accuracy, demonstrating the potential for developing generalized AMR prediction systems. Key findings include:</p>
                 <ul style="margin-top: 1rem; padding-left: 1.5rem; line-height: 1.8;">
-                    <li>Consistent performance across beta-lactam antibiotics</li>
-                    <li>Reduced accuracy for aminoglycosides</li>
+                    <li>Consistent performance across [DRUG CLASS TO BE UPDATED]</li>
+                    <li>Reduced accuracy for [DRUG CLASS TO BE UPDATED]</li>
                     <li>Strong generalization to unseen species combinations</li>
                 </ul>
             </div>
@@ -842,19 +880,19 @@
                 <div class="species-stats">
                     <div class="species-stat">
                         <label>Best Performing Species:</label>
-                        <value><em>Salmonella enterica</em> (95.1%)</value>
+                        <value>[TO BE UPDATED] ([TBD]%)</value>
                     </div>
                     <div class="species-stat">
                         <label>Most Challenging Species:</label>
-                        <value><em>Mycobacterium tuberculosis</em> (72.1%)</value>
+                        <value>[TO BE UPDATED] ([TBD]%)</value>
                     </div>
                     <div class="species-stat">
                         <label>Species-Agnostic Accuracy:</label>
-                        <value>91.2%</value>
+                        <value>[TBD]%</value>
                     </div>
                     <div class="species-stat">
                         <label>Cross-Validation Stability:</label>
-                        <value>High (CV < 4.1%)</value>
+                        <value>[TBD] (CV < [TBD]%)</value>
                     </div>
                 </div>
             </div>
@@ -862,20 +900,20 @@
                 <div class="species-name">Antibiotic Class Performance</div>
                 <div class="species-stats">
                     <div class="species-stat">
-                        <label>Beta-lactams:</label>
-                        <value>Excellent (>90%)</value>
+                        <label>[DRUG CLASS 1]:</label>
+                        <value>[TBD] ([TBD]%)</value>
                     </div>
                     <div class="species-stat">
-                        <label>Fluoroquinolones:</label>
-                        <value>Very Good (85-90%)</value>
+                        <label>[DRUG CLASS 2]:</label>
+                        <value>[TBD] ([TBD]%)</value>
                     </div>
                     <div class="species-stat">
-                        <label>Aminoglycosides:</label>
-                        <value>Good (80-85%)</value>
+                        <label>[DRUG CLASS 3]:</label>
+                        <value>[TBD] ([TBD]%)</value>
                     </div>
                     <div class="species-stat">
-                        <label>Anti-tuberculosis drugs:</label>
-                        <value>Variable (70-85%)</value>
+                        <label>[DRUG CLASS 4]:</label>
+                        <value>[TBD] ([TBD]%)</value>
                     </div>
                 </div>
             </div>
@@ -919,28 +957,10 @@
                         <td>Multiple datasets</td>
                         <td><a href="https://doi.org/10.1128/msystems.00913-20">DOI: 10.1128/msystems.00913-20</a></td>
                     </tr>
-                    <tr>
-                        <td><em>Klebsiella pneumoniae</em></td>
-                        <td>Microbial Genomics</td>
-                        <td>PRJEB27342</td>
-                        <td><a href="https://doi.org/10.1099/mgen.0.001222">DOI: 10.1099/mgen.0.001222</a></td>
-                    </tr>
-                    <tr>
-                        <td><em>Mycobacterium tuberculosis</em></td>
-                        <td>Nature Communications</td>
-                        <td>Multiple datasets</td>
-                        <td><a href="https://doi.org/10.1038/s41467-022-31236-0">DOI: 10.1038/s41467-022-31236-0</a></td>
-                    </tr>
-                    <tr>
-                        <td><em>Acinetobacter baumannii</em></td>
-                        <td>mBio Journal</td>
-                        <td>PRJNA1014981, PRJNA317141, PRJNA419431</td>
-                        <td><a href="https://doi.org/10.1128/mbio.02852-24">DOI: 10.1128/mbio.02852-24</a></td>
-                    </tr>
                 </tbody>
             </table>
             <div class="figure-caption">
-                <strong>Table 2.</strong> Primary data sources for each bacterial species including original publications and NCBI project identifiers. All datasets were obtained from publicly available repositories and integrated using standardized phenotypic resistance classifications.
+                <strong>Table 2.</strong> Primary data sources for each of the three bacterial species included in the final study including original publications and NCBI project identifiers. All datasets were obtained from publicly available repositories and integrated using standardized phenotypic resistance classifications.
             </div>
         </div>
 
@@ -971,15 +991,15 @@
                 <div class="species-stats">
                     <div class="species-stat">
                         <label>Minimum Samples per Drug:</label>
-                        <value>3,000 non-null entries</value>
+                        <value>[TO BE UPDATED]</value>
                     </div>
                     <div class="species-stat">
                         <label>Class Balance Ratio:</label>
-                        <value>0.3 - 3.0 (R:S)</value>
+                        <value>[TO BE UPDATED] (R:S)</value>
                     </div>
                     <div class="species-stat">
                         <label>Minimum per Class:</label>
-                        <value>1,000 entries each</value>
+                        <value>[TO BE UPDATED] entries each</value>
                     </div>
                     <div class="species-stat">
                         <label>Missing Data Handling:</label>
@@ -992,24 +1012,24 @@
         <div class="figure-container" style="margin-top: 2rem;">
             <h3>Antibiotic Coverage</h3>
             <p style="line-height: 1.8; margin: 1rem 0;">
-                Our dataset encompasses 66 unique antibiotics across major therapeutic classes, providing comprehensive coverage of clinically relevant antimicrobial agents. The selection includes both first-line and reserve antibiotics, ensuring clinical applicability across diverse treatment scenarios.
+                Our final dataset encompasses [TO BE UPDATED] unique antibiotics across major therapeutic classes, providing comprehensive coverage of clinically relevant antimicrobial agents. The selection includes both first-line and reserve antibiotics, ensuring clinical applicability across diverse treatment scenarios.
             </p>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
                 <div style="padding: 1rem; background: var(--bg-color); border-left: 3px solid var(--accent-color);">
-                    <strong>Beta-lactams</strong><br>
-                    <small>Ampicillin, Ceftriaxone, Meropenem, Imipenem</small>
+                    <strong>[DRUG CLASS 1]</strong><br>
+                    <small>[LIST TO BE UPDATED]</small>
                 </div>
                 <div style="padding: 1rem; background: var(--bg-color); border-left: 3px solid var(--accent-color);">
-                    <strong>Fluoroquinolones</strong><br>
-                    <small>Ciprofloxacin, Levofloxacin, Moxifloxacin</small>
+                    <strong>[DRUG CLASS 2]</strong><br>
+                    <small>[LIST TO BE UPDATED]</small>
                 </div>
                 <div style="padding: 1rem; background: var(--bg-color); border-left: 3px solid var(--accent-color);">
-                    <strong>Aminoglycosides</strong><br>
-                    <small>Gentamicin, Streptomycin, Amikacin</small>
+                    <strong>[DRUG CLASS 3]</strong><br>
+                    <small>[LIST TO BE UPDATED]</small>
                 </div>
                 <div style="padding: 1rem; background: var(--bg-color); border-left: 3px solid var(--accent-color);">
-                    <strong>Anti-TB drugs</strong><br>
-                    <small>Isoniazid, Rifampicin, Ethambutol</small>
+                    <strong>[DRUG CLASS 4]</strong><br>
+                    <small>[LIST TO BE UPDATED]</small>
                 </div>
             </div>
         </div>
@@ -1019,7 +1039,53 @@
     <section id="resources">
         <div class="section-header">
             <h2 class="section-title">Computational Resources</h2>
-            <p class="section-subtitle">Code, datasets, and reproducible analysis workflows</p>
+            <p class="section-subtitle">Code, datasets, models, and interactive demonstrations</p>
+        </div>
+
+        <!-- Featured Links -->
+        <div class="species-grid" style="margin-bottom: 3rem;">
+            <div class="species-card">
+                <div class="species-name">Research Paper</div>
+                <div class="species-stats">
+                    <div class="species-stat">
+                        <label>Preprint Server:</label>
+                        <value>bioRxiv</value>
+                    </div>
+                    <div class="species-stat">
+                        <label>Status:</label>
+                        <value>Published</value>
+                    </div>
+                    <div class="species-stat">
+                        <label>DOI:</label>
+                        <value>[TO BE ADDED]</value>
+                    </div>
+                </div>
+                <div class="publication-links" style="margin-top: 1rem;">
+                    <a href="#" class="pub-link">Read on bioRxiv</a>
+                    <a href="#" class="pub-link secondary">Download PDF</a>
+                </div>
+            </div>
+            <div class="species-card">
+                <div class="species-name">Interactive Demo</div>
+                <div class="species-stats">
+                    <div class="species-stat">
+                        <label>Platform:</label>
+                        <value>Hugging Face Spaces</value>
+                    </div>
+                    <div class="species-stat">
+                        <label>Models Available:</label>
+                        <value>3 Species + General</value>
+                    </div>
+                    <div class="species-stat">
+                        <label>Upload Format:</label>
+                        <value>FASTA files</value>
+                    </div>
+                </div>
+                <div class="publication-links" style="margin-top: 1rem;">
+                    <a href="#" class="pub-link">Try Demo</a>
+                    <a href="#" class="pub-link secondary">View on HF</a>
+                </div>
+            </div>
         </div>
 
         <div class="figure-container">
