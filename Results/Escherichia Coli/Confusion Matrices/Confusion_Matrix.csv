@@ -1,0 +1,6 @@
+Drug,TN,FP,FN,TP
+Ciprofloxacin,19,111,3,285
+Gentamicin,22,39,33,317
+Cefuroxime,3,78,2,263
+Ampicillin,217,21,65,33
+Total,261,249,103,898

@@ -1,0 +1,10 @@
+Drug,TN,FP,FN,TP
+Tetracycline,205,66,35,326
+Ampicillin,90,81,40,421
+Amoxicillin-Clavulanic acid,44,46,24,518
+Cefoxitin,42,9,2,579
+Ceftiofur,42,4,2,584
+Gentamicin,52,11,10,559
+Ceftriaxone,34,6,6,586
+Chloramphenicol,1,48,4,579
+Total,510,271,123,4152
