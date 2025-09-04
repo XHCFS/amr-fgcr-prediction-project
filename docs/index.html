@@ -742,38 +742,44 @@
                 <a href="https://github.com/XHCFS/amr-fgcr-prediction-project" class="access-button tertiary">View Code & Data</a>
             </div>
             
-            <div class="key-metrics">
-                <!-- Salmonella-specific model -->
-                <div class="metric-item">
-                    <div class="metric-value">~5,000</div>
-                    <div class="metric-label">Genomes (Salmonella-specific model)</div>
-                </div>
-                <div class="metric-item">
-                    <div class="metric-value">8</div>
-                    <div class="metric-label">Antibiotics Tested (Salmonella)</div>
-                </div>
-                <div class="metric-item">
-                    <div class="metric-value">85%</div>
-                    <div class="metric-label">Overall AUC (Salmonella model)</div>
-                </div>
+            <div class="key-metrics" style="margin-bottom:2rem;">
+              <h3 style="grid-column: 1 / -1; font-size:1.2rem; color:var(--primary-dark); margin-bottom:1rem;">
+                Salmonella-Specific Model
+              </h3>
+              <div class="metric-item">
+                <div class="metric-value">~5,000</div>
+                <div class="metric-label">Genomes</div>
+              </div>
+              <div class="metric-item">
+                <div class="metric-value">8</div>
+                <div class="metric-label">Antibiotics Tested</div>
+              </div>
+              <div class="metric-item">
+                <div class="metric-value">85%</div>
+                <div class="metric-label">Overall AUC</div>
+              </div>
+            </div>
             
-                <!-- Species-agnostic model -->
-                <div class="metric-item">
-                    <div class="metric-value">10,079</div>
-                    <div class="metric-label">Genomes (Species-agnostic model)</div>
-                </div>
-                <div class="metric-item">
-                    <div class="metric-value">3</div>
-                    <div class="metric-label">Species (<em>S. aureus</em>, <em>S. enterica</em>, <em>E. coli</em>)</div>
-                </div>
-                <div class="metric-item">
-                    <div class="metric-value">2</div>
-                    <div class="metric-label">Antibiotics Tested (Gentamicin, Tetracycline)</div>
-                </div>
-                <div class="metric-item">
-                    <div class="metric-value">93%</div>
-                    <div class="metric-label">Overall AUC (Species-agnostic model)</div>
-                </div>
+            <div class="key-metrics">
+              <h3 style="grid-column: 1 / -1; font-size:1.2rem; color:var(--primary-dark); margin-bottom:1rem;">
+                Species-Agnostic Model
+              </h3>
+              <div class="metric-item">
+                <div class="metric-value">10,079</div>
+                <div class="metric-label">Genomes</div>
+              </div>
+              <div class="metric-item">
+                <div class="metric-value">3</div>
+                <div class="metric-label">Species (<em>S. aureus</em>, <em>S. enterica</em>, <em>E. coli</em>)</div>
+              </div>
+              <div class="metric-item">
+                <div class="metric-value">2</div>
+                <div class="metric-label">Antibiotics Tested (Gentamicin, Tetracycline)</div>
+              </div>
+              <div class="metric-item">
+                <div class="metric-value">93%</div>
+                <div class="metric-label">Overall AUC</div>
+              </div>
             </div>
         </div>
     </section>
@@ -832,7 +838,7 @@
       </div>
     
       <!-- FCGR Samples -->
-      <div class="fcgr-display">
+      <div class="figure-container">
         <h3>Frequency Chaos Game Representation (FCGR)</h3>
         <div class="fcgr-grid" id="fcgr-images"></div>
         <div class="figure-caption">
@@ -883,6 +889,26 @@
           header: true,
           complete: function (results) {
             if (results.data.length > 0) {
+              // Special case: trivial tables (all 0s) → replace with summary box
+              const allZero = results.data.every((row) =>
+                Object.values(row).every((v) => v === "0" || v === "0.0" || v === "")
+              );
+              if (allZero) {
+                const box = document.createElement("div");
+                box.style.padding = "1rem";
+                box.style.background = "var(--bg-color)";
+                box.style.borderLeft = "4px solid var(--accent-color)";
+                box.style.marginBottom = "1rem";
+                box.innerHTML = `<strong>${captionText}:</strong> All values are 0 (no nulls detected).`;
+                csvContainer.appendChild(box);
+                return;
+              }
+    
+              // Otherwise render as scrollable table
+              const wrapper = document.createElement("div");
+              wrapper.style.marginBottom = "2rem";
+              wrapper.style.overflowX = "auto"; // fix wide tables
+    
               const table = document.createElement("table");
               table.classList.add("data-table");
     
@@ -917,12 +943,8 @@
               caption.classList.add("figure-caption");
               caption.innerHTML = `<strong>${captionText}</strong>`;
     
-              // Wrap
-              const wrapper = document.createElement("div");
-              wrapper.style.marginBottom = "2rem";
               wrapper.appendChild(table);
               wrapper.appendChild(caption);
-    
               csvContainer.appendChild(wrapper);
             }
           },
@@ -935,16 +957,16 @@
     
       // === FCGR sample images ===
       const fcgrImages = [
-        { file: "FCGR_Samples/Staphylococcus aureus.png", label: "S. aureus" },
-        { file: "FCGR_Samples/Salmonella enterica.png", label: "S. enterica" },
-        { file: "FCGR_Samples/Escherichia coli.png", label: "E. coli" },
+        { file: "FCGR_Samples/Staphylococcus_aureus.png", label: "S. aureus" },
+        { file: "FCGR_Samples/Salmonella_enterica.png", label: "S. enterica" },
+        { file: "FCGR_Samples/Escherichia_coli.png", label: "E. coli" },
       ];
       const fcgrContainer = document.getElementById("fcgr-images");
       fcgrImages.forEach((img) => {
         const div = document.createElement("div");
         div.classList.add("fcgr-item");
         div.innerHTML = `
-          <img src="${img.file}" alt="${img.label}" style="width:100%; border:1px solid var(--border-color)" />
+          <img src="${img.file}" alt="${img.label}" style="max-width:300px; width:100%; height:auto; border:1px solid var(--border-color)" />
           <p class="fcgr-label"><em>${img.label}</em> FCGR pattern</p>
         `;
         fcgrContainer.appendChild(div);
@@ -969,7 +991,7 @@
         const div = document.createElement("div");
         div.classList.add("fcgr-item");
         div.innerHTML = `
-          <img src="${file}" alt="${edaImages[file]}" style="width:100%; border:1px solid var(--border-color)" />
+          <img src="${file}" alt="${edaImages[file]}" style="max-width:400px; width:100%; height:auto; border:1px solid var(--border-color)" />
           <p class="fcgr-label">${edaImages[file]}</p>
         `;
         edaContainer.appendChild(div);
