@@ -784,6 +784,9 @@
         </div>
     </section>
 
+
+
+    
     <!-- Methods Section -->
     <section id="methods">
       <div class="section-header">
@@ -831,10 +834,16 @@
         </div>
       </div>
     
-      <!-- Dynamic CSV Tables -->
+      <!-- General Model Tables -->
       <div class="figure-container">
-        <h3>Exploratory Data Analysis (EDA)</h3>
-        <div id="csv-tables"></div>
+        <h3>Exploratory Data Analysis – General Model</h3>
+        <div id="general-model-tables"></div>
+      </div>
+    
+      <!-- Salmonella Model Tables -->
+      <div class="figure-container">
+        <h3>Exploratory Data Analysis – Salmonella Model</h3>
+        <div id="salmonella-model-tables"></div>
       </div>
     
       <!-- FCGR Samples -->
@@ -861,8 +870,8 @@
     <!-- PapaParse for CSV parsing -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <script>
-      // === CSVs with manual labels ===
-      const csvFiles = {
+      // === CSVs grouped by model ===
+      const generalCSVs = {
         "eda_results/general_model_label_ratio_per_species.csv":
           "Table 1. Label ratio per species (General Model)",
         "eda_results/general_model_null_percentages_per_species.csv":
@@ -873,17 +882,19 @@
           "Table 4. Overall null percentages (General Model)",
         "eda_results/general_model_species_distribution.csv":
           "Table 5. Species distribution (General Model)",
+      };
+    
+      const salmonellaCSVs = {
         "eda_results/salmonella_only_label_ratio_per_drug.csv":
           "Table 6. Label ratio per drug (Salmonella Model)",
         "eda_results/salmonella_only_null_percentages_per_drug.csv":
           "Table 7. Null percentages per drug (Salmonella Model)",
         "eda_results/salmonella_only_overall_null_percentage.csv":
-          "Table 8. Overall null percentage (Salmonella Model)",
+          "Summary. Overall null percentage (Salmonella Model)",
       };
     
-      const csvContainer = document.getElementById("csv-tables");
-    
-      function renderCSV(file, captionText) {
+      // Render CSVs
+      function renderCSV(file, captionText, containerId) {
         Papa.parse(file, {
           download: true,
           header: true,
@@ -900,14 +911,41 @@
                 box.style.borderLeft = "4px solid var(--accent-color)";
                 box.style.marginBottom = "1rem";
                 box.innerHTML = `<strong>${captionText}:</strong> All values are 0 (no nulls detected).`;
-                csvContainer.appendChild(box);
+                document.getElementById(containerId).appendChild(box);
+                return;
+              }
+    
+              // Special case: Table 4 (General Model overall nulls) → show as info boxes
+              if (file.includes("general_model_overall_null_percentages.csv")) {
+                const wrapper = document.createElement("div");
+                wrapper.style.display = "flex";
+                wrapper.style.gap = "1rem";
+                wrapper.style.flexWrap = "wrap";
+                results.data.forEach((row) => {
+                  Object.keys(row).forEach((drug) => {
+                    if (drug && row[drug] && row[drug] !== "0") {
+                      const card = document.createElement("div");
+                      card.style.flex = "1 1 200px";
+                      card.style.padding = "1rem";
+                      card.style.background = "var(--bg-color)";
+                      card.style.borderLeft = "4px solid var(--primary-color)";
+                      card.innerHTML = `<strong>${drug}:</strong> ${row[drug]}% nulls`;
+                      wrapper.appendChild(card);
+                    }
+                  });
+                });
+                const caption = document.createElement("div");
+                caption.classList.add("figure-caption");
+                caption.innerHTML = `<strong>${captionText}</strong>`;
+                document.getElementById(containerId).appendChild(wrapper);
+                document.getElementById(containerId).appendChild(caption);
                 return;
               }
     
               // Otherwise render as scrollable table
               const wrapper = document.createElement("div");
               wrapper.style.marginBottom = "2rem";
-              wrapper.style.overflowX = "auto"; // fix wide tables
+              wrapper.style.overflowX = "auto";
     
               const table = document.createElement("table");
               table.classList.add("data-table");
@@ -945,14 +983,18 @@
     
               wrapper.appendChild(table);
               wrapper.appendChild(caption);
-              csvContainer.appendChild(wrapper);
+              document.getElementById(containerId).appendChild(wrapper);
             }
           },
         });
       }
     
-      Object.keys(csvFiles).forEach((file) => {
-        renderCSV(file, csvFiles[file]);
+      Object.keys(generalCSVs).forEach((file) => {
+        renderCSV(file, generalCSVs[file], "general-model-tables");
+      });
+    
+      Object.keys(salmonellaCSVs).forEach((file) => {
+        renderCSV(file, salmonellaCSVs[file], "salmonella-model-tables");
       });
     
       // === FCGR sample images ===
@@ -966,7 +1008,7 @@
         const div = document.createElement("div");
         div.classList.add("fcgr-item");
         div.innerHTML = `
-          <img src="${img.file}" alt="${img.label}" style="max-width:300px; width:100%; height:auto; border:1px solid var(--border-color)" />
+          <img src="${img.file}" alt="${img.label}" style="max-width:350px; width:100%; height:auto; border:1px solid var(--border-color)" />
           <p class="fcgr-label"><em>${img.label}</em> FCGR pattern</p>
         `;
         fcgrContainer.appendChild(div);
@@ -991,7 +1033,7 @@
         const div = document.createElement("div");
         div.classList.add("fcgr-item");
         div.innerHTML = `
-          <img src="${file}" alt="${edaImages[file]}" style="max-width:400px; width:100%; height:auto; border:1px solid var(--border-color)" />
+          <img src="${file}" alt="${edaImages[file]}" style="max-width:450px; width:100%; height:auto; border:1px solid var(--border-color)" />
           <p class="fcgr-label">${edaImages[file]}</p>
         `;
         edaContainer.appendChild(div);
