@@ -23,6 +23,8 @@
             --text-secondary: #546e7a;
             --border-color: #e0e0e0;
             --dna-color: rgba(26, 78, 138, 0.03);
+            --salmonella-color: #8e24aa;
+            --general-color: #1565c0;
         }
         
         body {
@@ -201,6 +203,15 @@
             border-radius: 4px;
         }
         
+        /* Model Type Indicators */
+        .key-metrics.salmonella {
+            border-left: 5px solid var(--salmonella-color);
+        }
+        
+        .key-metrics.general {
+            border-left: 5px solid var(--general-color);
+        }
+        
         .metric-item {
             padding: 1rem;
             border-left: 3px solid var(--primary-color);
@@ -300,38 +311,131 @@
             font-style: italic;
         }
         
+        /* Model Type Sections */
+        .model-section {
+            margin: 4rem 0;
+            padding: 2rem;
+            border-radius: 8px;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+        }
+        
+        .model-section.salmonella {
+            border-left: 5px solid var(--salmonella-color);
+            background: linear-gradient(135deg, rgba(142, 36, 170, 0.02) 0%, rgba(255,255,255,1) 100%);
+        }
+        
+        .model-section.general {
+            border-left: 5px solid var(--general-color);
+            background: linear-gradient(135deg, rgba(21, 101, 192, 0.02) 0%, rgba(255,255,255,1) 100%);
+        }
+        
+        .model-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .model-title.salmonella {
+            color: var(--salmonella-color);
+        }
+        
+        .model-title.general {
+            color: var(--general-color);
+        }
+        
+        .model-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .model-badge.salmonella {
+            background: rgba(142, 36, 170, 0.1);
+            color: var(--salmonella-color);
+        }
+        
+        .model-badge.general {
+            background: rgba(21, 101, 192, 0.1);
+            color: var(--general-color);
+        }
+        
         /* Scientific Figure Style */
         .figure-container {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            padding: 2rem;
-            margin: 2rem 0;
+            padding: 2.5rem;
+            margin: 3rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .figure-container h3 {
+            color: var(--primary-dark);
+            margin-bottom: 2rem;
+            font-size: 1.3rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
         }
         
         .figure-caption {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--text-secondary);
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border-color);
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border-color);
+            line-height: 1.6;
+            background: rgba(0,0,0,0.02);
+            padding: 1.5rem;
+            border-radius: 4px;
         }
         
         .figure-caption strong {
             color: var(--primary-dark);
         }
         
-        /* Table Styles */
+        /* Smart Table Styles */
+        .table-wrapper {
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .table-header {
+            background: var(--primary-dark);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .table-scrollable {
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 2rem 0;
             background: var(--card-bg);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            min-width: 600px;
         }
         
         .data-table thead {
-            background: var(--primary-dark);
+            background: var(--primary-color);
             color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
         
         .data-table th {
@@ -340,16 +444,51 @@
             font-weight: 600;
             font-size: 0.9rem;
             letter-spacing: 0.5px;
+            border-right: 1px solid rgba(255,255,255,0.2);
         }
         
         .data-table td {
             padding: 1rem;
             border-bottom: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
             font-size: 0.95rem;
         }
         
         .data-table tbody tr:hover {
             background: rgba(26, 78, 138, 0.02);
+        }
+        
+        .data-table tbody tr:nth-child(even) {
+            background: rgba(0,0,0,0.01);
+        }
+        
+        /* Transposed table for narrow tables */
+        .transposed-table {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .transposed-row {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            align-items: center;
+        }
+        
+        .transposed-row:nth-child(even) {
+            background: rgba(0,0,0,0.01);
+        }
+        
+        .transposed-label {
+            font-weight: 600;
+            color: var(--primary-dark);
+            padding-right: 1rem;
+            border-right: 2px solid var(--border-color);
+        }
+        
+        .transposed-value {
+            padding-left: 1rem;
         }
         
         /* Species Grid */
@@ -365,6 +504,7 @@
             border: 1px solid var(--border-color);
             padding: 1.5rem;
             transition: box-shadow 0.2s ease;
+            border-radius: 8px;
         }
         
         .species-card:hover {
@@ -414,6 +554,8 @@
             padding: 2rem;
             border-top: 4px solid var(--primary-color);
             position: relative;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         
         .method-step::after {
@@ -442,38 +584,40 @@
             line-height: 1.6;
         }
         
-        /* FCGR Visualization */
-        .fcgr-display {
-            background: var(--card-bg);
-            padding: 2rem;
-            border: 1px solid var(--border-color);
+        /* Image Grid */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
             margin: 2rem 0;
         }
         
-        .fcgr-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        
-        .fcgr-item {
+        .image-item {
             text-align: center;
-        }
-        
-        .fcgr-placeholder {
-            width: 100%;
-            aspect-ratio: 1;
-            background: linear-gradient(45deg, #f0f0f0 25%, #e0e0e0 25%, #e0e0e0 50%, #f0f0f0 50%, #f0f0f0 75%, #e0e0e0 75%, #e0e0e0);
-            background-size: 20px 20px;
+            background: var(--card-bg);
+            padding: 1.5rem;
             border: 1px solid var(--border-color);
-            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         
-        .fcgr-label {
-            font-size: 0.85rem;
+        .image-item img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            min-height: 300px;
+            object-fit: contain;
+            background: white;
+        }
+        
+        .image-label {
+            font-size: 0.9rem;
             color: var(--text-secondary);
             font-style: italic;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
         }
         
         /* Results Section */
@@ -488,6 +632,8 @@
             background: var(--card-bg);
             padding: 2rem;
             border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         
         .result-card h4 {
@@ -514,6 +660,7 @@
             font-size: 0.9rem;
             transition: background 0.2s ease;
             border: 1px solid var(--primary-dark);
+            border-radius: 4px;
         }
         
         .pub-link:hover {
@@ -558,6 +705,8 @@
             background: var(--card-bg);
             padding: 2rem;
             border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         
         .member-name {
@@ -592,6 +741,7 @@
             padding: 0.5rem 1rem;
             border: 1px solid var(--primary-color);
             transition: all 0.2s ease;
+            border-radius: 4px;
         }
         
         .member-links a:hover {
@@ -667,12 +817,24 @@
                 grid-template-columns: 1fr;
             }
             
-            .fcgr-grid {
+            .image-grid {
                 grid-template-columns: 1fr;
             }
 
             .quick-access {
                 flex-direction: column;
+            }
+            
+            .transposed-row {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .transposed-label {
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding-bottom: 0.5rem;
+                margin-bottom: 0.5rem;
             }
         }
     </style>
@@ -741,8 +903,8 @@
                 <a href="https://github.com/XHCFS/amr-fgcr-prediction-project" class="access-button tertiary">View Code & Data</a>
             </div>
             
-            <div class="key-metrics" style="margin-bottom:2rem;">
-              <h3 style="grid-column: 1 / -1; font-size:1.2rem; color:var(--primary-dark); margin-bottom:1rem;">
+            <div class="key-metrics salmonella" style="margin-bottom:2rem;">
+              <h3 style="grid-column: 1 / -1; font-size:1.2rem; color:var(--salmonella-color); margin-bottom:1rem;">
                 Salmonella-Specific Model
               </h3>
               <div class="metric-item">
@@ -759,8 +921,8 @@
               </div>
             </div>
             
-            <div class="key-metrics">
-              <h3 style="grid-column: 1 / -1; font-size:1.2rem; color:var(--primary-dark); margin-bottom:1rem;">
+            <div class="key-metrics general">
+              <h3 style="grid-column: 1 / -1; font-size:1.2rem; color:var(--general-color); margin-bottom:1rem;">
                 Species-Agnostic Model
               </h3>
               <div class="metric-item">
@@ -783,9 +945,6 @@
         </div>
     </section>
 
-
-
-    
     <!-- Methods Section -->
     <section id="methods">
       <div class="section-header">
@@ -833,213 +992,43 @@
         </div>
       </div>
     
-      <!-- General Model Tables -->
-      <div class="figure-container">
-        <h3>Exploratory Data Analysis – General Model</h3>
-        <div id="general-model-tables"></div>
-      </div>
-    
-      <!-- Salmonella Model Tables -->
-      <div class="figure-container">
-        <h3>Exploratory Data Analysis – Salmonella Model</h3>
-        <div id="salmonella-model-tables"></div>
-      </div>
-    
       <!-- FCGR Samples -->
       <div class="figure-container">
-        <h3>Frequency Chaos Game Representation (FCGR)</h3>
-        <div class="fcgr-grid" id="fcgr-images"></div>
+        <h3>Frequency Chaos Game Representation (FCGR) Examples</h3>
+        <div class="image-grid" id="fcgr-images"></div>
         <div class="figure-caption">
           <strong>Figure 1.</strong> Representative FCGR images for the three
-          bacterial species showing distinct genomic signatures.
+          bacterial species showing distinct genomic signatures. Each image represents an 8-mer frequency pattern from whole genome sequences converted to 256×256 pixel grayscale images.
         </div>
+      </div>
+    
+      <!-- Exploratory Data Analysis Section -->
+      <div class="model-section general">
+        <div class="model-title general">
+          <span>General Model - Exploratory Data Analysis</span>
+          <span class="model-badge general">Species-Agnostic</span>
+        </div>
+        <div id="general-model-eda-tables"></div>
+      </div>
+    
+      <div class="model-section salmonella">
+        <div class="model-title salmonella">
+          <span>Salmonella Model - Exploratory Data Analysis</span>
+          <span class="model-badge salmonella">Species-Specific</span>
+        </div>
+        <div id="salmonella-model-eda-tables"></div>
       </div>
     
       <!-- Correlation Matrices -->
       <div class="figure-container">
-        <h3>Correlation Matrices</h3>
-        <div class="fcgr-grid" id="eda-images"></div>
+        <h3>Resistance Profile Correlation Matrices</h3>
+        <div class="image-grid" id="eda-images"></div>
         <div class="figure-caption">
           <strong>Figure 2.</strong> Correlation matrices of resistance profiles for
-          each species and overall dataset.
+          each species and overall dataset. These matrices reveal patterns of co-resistance and species-specific resistance profiles that inform model training strategies.
         </div>
       </div>
     </section>
-    
-    <!-- PapaParse for CSV parsing -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script>
-      // === CSVs grouped by model ===
-      const generalCSVs = {
-        "eda_results/general_model_label_ratio_per_species.csv":
-          "Table 1. Label ratio per species (General Model)",
-        "eda_results/general_model_null_percentages_per_species.csv":
-          "Table 2. Null percentages per species (General Model)",
-        "eda_results/general_model_overall_label_ratio.csv":
-          "Table 3. Overall label ratio (General Model)",
-        "eda_results/general_model_overall_null_percentages.csv":
-          "Table 4. Overall null percentages (General Model)",
-        "eda_results/general_model_species_distribution.csv":
-          "Table 5. Species distribution (General Model)",
-      };
-    
-      const salmonellaCSVs = {
-        "eda_results/salmonella_only_label_ratio_per_drug.csv":
-          "Table 6. Label ratio per drug (Salmonella Model)",
-        "eda_results/salmonella_only_null_percentages_per_drug.csv":
-          "Table 7. Null percentages per drug (Salmonella Model)",
-        "eda_results/salmonella_only_overall_null_percentage.csv":
-          "Summary. Overall null percentage (Salmonella Model)",
-      };
-    
-      // Render CSVs
-      function renderCSV(file, captionText, containerId) {
-        Papa.parse(file, {
-          download: true,
-          header: true,
-          complete: function (results) {
-            if (results.data.length > 0) {
-              // Special case: trivial tables (all 0s) → replace with summary box
-              const allZero = results.data.every((row) =>
-                Object.values(row).every((v) => v === "0" || v === "0.0" || v === "")
-              );
-              if (allZero) {
-                const box = document.createElement("div");
-                box.style.padding = "1rem";
-                box.style.background = "var(--bg-color)";
-                box.style.borderLeft = "4px solid var(--accent-color)";
-                box.style.marginBottom = "1rem";
-                box.innerHTML = `<strong>${captionText}:</strong> All values are 0 (no nulls detected).`;
-                document.getElementById(containerId).appendChild(box);
-                return;
-              }
-    
-              // Special case: Table 4 (General Model overall nulls) → show as info boxes
-              if (file.includes("general_model_overall_null_percentages.csv")) {
-                const wrapper = document.createElement("div");
-                wrapper.style.display = "flex";
-                wrapper.style.gap = "1rem";
-                wrapper.style.flexWrap = "wrap";
-                results.data.forEach((row) => {
-                  Object.keys(row).forEach((drug) => {
-                    if (drug && row[drug] && row[drug] !== "0") {
-                      const card = document.createElement("div");
-                      card.style.flex = "1 1 200px";
-                      card.style.padding = "1rem";
-                      card.style.background = "var(--bg-color)";
-                      card.style.borderLeft = "4px solid var(--primary-color)";
-                      card.innerHTML = `<strong>${drug}:</strong> ${row[drug]}% nulls`;
-                      wrapper.appendChild(card);
-                    }
-                  });
-                });
-                const caption = document.createElement("div");
-                caption.classList.add("figure-caption");
-                caption.innerHTML = `<strong>${captionText}</strong>`;
-                document.getElementById(containerId).appendChild(wrapper);
-                document.getElementById(containerId).appendChild(caption);
-                return;
-              }
-    
-              // Otherwise render as scrollable table
-              const wrapper = document.createElement("div");
-              wrapper.style.marginBottom = "2rem";
-              wrapper.style.overflowX = "auto";
-    
-              const table = document.createElement("table");
-              table.classList.add("data-table");
-    
-              // Header
-              const thead = document.createElement("thead");
-              const headerRow = document.createElement("tr");
-              results.meta.fields.forEach((field) => {
-                const th = document.createElement("th");
-                th.textContent = field;
-                headerRow.appendChild(th);
-              });
-              thead.appendChild(headerRow);
-              table.appendChild(thead);
-    
-              // Body
-              const tbody = document.createElement("tbody");
-              results.data.forEach((row) => {
-                if (Object.values(row).some((v) => v !== "")) {
-                  const tr = document.createElement("tr");
-                  results.meta.fields.forEach((field) => {
-                    const td = document.createElement("td");
-                    td.textContent = row[field];
-                    tr.appendChild(td);
-                  });
-                  tbody.appendChild(tr);
-                }
-              });
-              table.appendChild(tbody);
-    
-              // Caption
-              const caption = document.createElement("div");
-              caption.classList.add("figure-caption");
-              caption.innerHTML = `<strong>${captionText}</strong>`;
-    
-              wrapper.appendChild(table);
-              wrapper.appendChild(caption);
-              document.getElementById(containerId).appendChild(wrapper);
-            }
-          },
-        });
-      }
-    
-      Object.keys(generalCSVs).forEach((file) => {
-        renderCSV(file, generalCSVs[file], "general-model-tables");
-      });
-    
-      Object.keys(salmonellaCSVs).forEach((file) => {
-        renderCSV(file, salmonellaCSVs[file], "salmonella-model-tables");
-      });
-    
-      // === FCGR sample images ===
-      const fcgrImages = [
-        { file: "FCGR_Samples/Staphylococcus_aureus.png", label: "S. aureus" },
-        { file: "FCGR_Samples/Salmonella_enterica.png", label: "S. enterica" },
-        { file: "FCGR_Samples/Escherichia_coli.png", label: "E. coli" },
-      ];
-      const fcgrContainer = document.getElementById("fcgr-images");
-      fcgrImages.forEach((img) => {
-        const div = document.createElement("div");
-        div.classList.add("fcgr-item");
-        div.innerHTML = `
-          <img src="${img.file}" alt="${img.label}" style="max-width:350px; width:100%; height:auto; border:1px solid var(--border-color)" />
-          <p class="fcgr-label"><em>${img.label}</em> FCGR pattern</p>
-        `;
-        fcgrContainer.appendChild(div);
-      });
-    
-      // === Correlation matrices ===
-      const edaImages = {
-        "eda_results/general_model_Staphylococcus_aureus_correlation_matrix.png":
-          "Figure 3. Correlation matrix of resistance profiles (S. aureus)",
-        "eda_results/general_model_Salmonella_enterica_correlation_matrix.png":
-          "Figure 4. Correlation matrix of resistance profiles (S. enterica)",
-        "eda_results/general_model_Escherichia_coli_correlation_matrix.png":
-          "Figure 5. Correlation matrix of resistance profiles (E. coli)",
-        "eda_results/general_model_overall_correlation_matrix.png":
-          "Figure 6. Overall correlation matrix (General Model)",
-        "eda_results/salmonella_only_correlation_matrix.png":
-          "Figure 7. Correlation matrix (Salmonella Model)",
-      };
-    
-      const edaContainer = document.getElementById("eda-images");
-      Object.keys(edaImages).forEach((file) => {
-        const div = document.createElement("div");
-        div.classList.add("fcgr-item");
-        div.innerHTML = `
-          <img src="${file}" alt="${edaImages[file]}" style="max-width:450px; width:100%; height:auto; border:1px solid var(--border-color)" />
-          <p class="fcgr-label">${edaImages[file]}</p>
-        `;
-        edaContainer.appendChild(div);
-      });
-    </script>
-
-
     
     <!-- Results Section -->
     <section id="results">
@@ -1090,163 +1079,33 @@
         </ul>
       </div>
     
-      <!-- General Model Tables -->
-      <div class="figure-container">
-        <h3>General Model Results</h3>
-        <div id="general-model-tables"></div>
+      <!-- General Model Results -->
+      <div class="model-section general">
+        <div class="model-title general">
+          <span>General Model Results</span>
+          <span class="model-badge general">Species-Agnostic</span>
+        </div>
+        <div id="general-model-results-tables"></div>
       </div>
     
-      <!-- Salmonella Model Tables -->
-      <div class="figure-container">
-        <h3>Salmonella Model Results</h3>
-        <div id="salmonella-model-tables"></div>
+      <!-- Salmonella Model Results -->
+      <div class="model-section salmonella">
+        <div class="model-title salmonella">
+          <span>Salmonella Model Results</span>
+          <span class="model-badge salmonella">Species-Specific</span>
+        </div>
+        <div id="salmonella-model-results-tables"></div>
       </div>
     
-      <!-- Figures -->
+      <!-- Results Figures -->
       <div class="figure-container">
-        <h3>Confusion Matrices and Coverage Plots</h3>
-        <div class="fcgr-grid" id="results-images"></div>
+        <h3>Performance Visualization and Confusion Matrices</h3>
+        <div class="image-grid" id="results-images"></div>
+        <div class="figure-caption">
+          <strong>Figure 3.</strong> Model performance visualization including label coverage distributions and confusion matrices for both general and Salmonella-specific models. Coverage plots show the distribution of resistance labels across the dataset, while confusion matrices demonstrate classification performance.
+        </div>
       </div>
     </section>
-    
-    <!-- PapaParse for CSV parsing -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script>
-      // Helper: render CSV into a styled table with caption
-      function renderCSV(file, containerId, captionText) {
-        Papa.parse(file, {
-          download: true,
-          header: true,
-          complete: function (results) {
-            if (results.data.length > 0) {
-              const table = document.createElement("table");
-              table.classList.add("data-table");
-    
-              // Header
-              const thead = document.createElement("thead");
-              const headerRow = document.createElement("tr");
-              results.meta.fields.forEach((field) => {
-                const th = document.createElement("th");
-                th.textContent = field;
-                headerRow.appendChild(th);
-              });
-              thead.appendChild(headerRow);
-              table.appendChild(thead);
-    
-              // Body
-              const tbody = document.createElement("tbody");
-              results.data.forEach((row) => {
-                if (Object.values(row).some((v) => v !== "")) {
-                  const tr = document.createElement("tr");
-                  results.meta.fields.forEach((field) => {
-                    const td = document.createElement("td");
-                    td.textContent = row[field];
-                    tr.appendChild(td);
-                  });
-                  tbody.appendChild(tr);
-                }
-              });
-              table.appendChild(tbody);
-    
-              // Caption
-              const caption = document.createElement("div");
-              caption.classList.add("figure-caption");
-              caption.innerHTML = `<strong>${captionText}</strong>`;
-    
-              // Wrap
-              const wrapper = document.createElement("div");
-              wrapper.style.marginBottom = "2rem";
-              wrapper.appendChild(table);
-              wrapper.appendChild(caption);
-    
-              document.getElementById(containerId).appendChild(wrapper);
-            }
-          },
-        });
-      }
-    
-      // === General Model CSVs with labels ===
-      renderCSV(
-        "Results/General Model/Cross_Validation_Metrics_Mean_per_class.csv",
-        "general-model-tables",
-        "Table 1. Cross-validation mean metrics per class (General Model)"
-      );
-      renderCSV(
-        "Results/General Model/Cross_Validation_Metrics_SD_per_class.csv",
-        "general-model-tables",
-        "Table 2. Cross-validation standard deviation per class (General Model)"
-      );
-      renderCSV(
-        "Results/General Model/Cross_Validation_Metrics_summary.csv",
-        "general-model-tables",
-        "Table 3. Cross-validation summary metrics (General Model)"
-      );
-      renderCSV(
-        "Results/General Model/Test_Metrics.csv",
-        "general-model-tables",
-        "Table 4. Test set overall metrics (General Model)"
-      );
-      renderCSV(
-        "Results/General Model/Test_Metrics_per_class.csv",
-        "general-model-tables",
-        "Table 5. Test set metrics per antibiotic class (General Model)"
-      );
-      renderCSV(
-        "Results/General Model/Test_Metrics_per_species.csv",
-        "general-model-tables",
-        "Table 6. Test set metrics per species (General Model)"
-      );
-    
-      // === Salmonella Model CSVs with labels ===
-      renderCSV(
-        "Results/Salmonella Enterica/Cross_Validation_Metrics_Mean_per_class.csv",
-        "salmonella-model-tables",
-        "Table 7. Cross-validation mean metrics per class (Salmonella Model)"
-      );
-      renderCSV(
-        "Results/Salmonella Enterica/Cross_Validation_Metrics_SD_per_class.csv",
-        "salmonella-model-tables",
-        "Table 8. Cross-validation standard deviation per class (Salmonella Model)"
-      );
-      renderCSV(
-        "Results/Salmonella Enterica/Cross_Validation_Metrics_summary.csv",
-        "salmonella-model-tables",
-        "Table 9. Cross-validation summary metrics (Salmonella Model)"
-      );
-      renderCSV(
-        "Results/Salmonella Enterica/Test_Metrics.csv",
-        "salmonella-model-tables",
-        "Table 10. Test set overall metrics (Salmonella Model)"
-      );
-      renderCSV(
-        "Results/Salmonella Enterica/Test_Metrics_per_class.csv",
-        "salmonella-model-tables",
-        "Table 11. Test set metrics per antibiotic class (Salmonella Model)"
-      );
-    
-      // === Figures with manual labels ===
-      const figureLabels = {
-        "Results/General Model/Label_Coverage.png":
-          "Figure 6. Label coverage distribution (General Model)",
-        "Results/Salmonella Enterica/Label_Coverage.png":
-          "Figure 7. Label coverage distribution (Salmonella Model)",
-        "Results/General Model/Confusion Matrices/Cross_Validation_Metrics_Mean_per_class.png":
-          "Figure 8. Confusion matrix (mean per class, General Model)",
-        "Results/Salmonella Enterica/Confusion Matrices/Cross_Validation_Metrics_Mean_per_class.png":
-          "Figure 9. Confusion matrix (mean per class, Salmonella Model)",
-      };
-    
-      const imgContainer = document.getElementById("results-images");
-      Object.keys(figureLabels).forEach((file) => {
-        const div = document.createElement("div");
-        div.classList.add("fcgr-item");
-        div.innerHTML = `
-          <img src="${file}" alt="${figureLabels[file]}" style="width:100%; border:1px solid var(--border-color)" />
-          <p class="fcgr-label">${figureLabels[file]}</p>
-        `;
-        imgContainer.appendChild(div);
-      });
-    </script>
 
     <!-- Data Section -->
     <section id="data">
@@ -1256,39 +1115,44 @@
         </div>
 
         <div class="figure-container">
-            <h3 style="margin-bottom: 1.5rem;">Table 2. Data Sources and Project Information</h3>
-            <table class="data-table resources-table">
-                <thead>
-                    <tr>
-                        <th>Species</th>
-                        <th>Primary Source</th>
-                        <th>Project Number(s)</th>
-                        <th>Publication</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><em>Staphylococcus aureus</em></td>
-                        <td>mSystems Journal</td>
-                        <td>Multiple datasets</td>
-                        <td><a href="https://doi.org/10.1128/msystems.01185-20">DOI: 10.1128/msystems.01185-20</a></td>
-                    </tr>
-                    <tr>
-                        <td><em>Salmonella enterica</em></td>
-                        <td>JCM Journal</td>
-                        <td>PRJNA292661, PRJNA292666</td>
-                        <td><a href="https://doi.org/10.1128/jcm.01260-18">DOI: 10.1128/jcm.01260-18</a></td>
-                    </tr>
-                    <tr>
-                        <td><em>Escherichia coli</em></td>
-                        <td>mSystems Journal</td>
-                        <td>Multiple datasets</td>
-                        <td><a href="https://doi.org/10.1128/msystems.00913-20">DOI: 10.1128/msystems.00913-20</a></td>
-                    </tr>
-                </tbody>
-            </table>
+            <h3>Data Sources and Project Information</h3>
+            <div class="table-wrapper">
+                <div class="table-header">Primary Data Sources</div>
+                <div class="table-scrollable">
+                    <table class="data-table resources-table">
+                        <thead>
+                            <tr>
+                                <th>Species</th>
+                                <th>Primary Source</th>
+                                <th>Project Number(s)</th>
+                                <th>Publication</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><em>Staphylococcus aureus</em></td>
+                                <td>mSystems Journal</td>
+                                <td>Multiple datasets</td>
+                                <td><a href="https://doi.org/10.1128/msystems.01185-20">DOI: 10.1128/msystems.01185-20</a></td>
+                            </tr>
+                            <tr>
+                                <td><em>Salmonella enterica</em></td>
+                                <td>JCM Journal</td>
+                                <td>PRJNA292661, PRJNA292666</td>
+                                <td><a href="https://doi.org/10.1128/jcm.01260-18">DOI: 10.1128/jcm.01260-18</a></td>
+                            </tr>
+                            <tr>
+                                <td><em>Escherichia coli</em></td>
+                                <td>mSystems Journal</td>
+                                <td>Multiple datasets</td>
+                                <td><a href="https://doi.org/10.1128/msystems.00913-20">DOI: 10.1128/msystems.00913-20</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <div class="figure-caption">
-                <strong>Table 2.</strong> Primary data sources for each of the three bacterial species included in the final study including original publications and NCBI project identifiers. All datasets were obtained from publicly available repositories and integrated using standardized phenotypic resistance classifications.
+                <strong>Table 1.</strong> Primary data sources for each of the three bacterial species included in the final study including original publications and NCBI project identifiers. All datasets were obtained from publicly available repositories and integrated using standardized phenotypic resistance classifications.
             </div>
         </div>
 
@@ -1417,77 +1281,80 @@
         </div>
 
         <div class="figure-container">
-            <h3 style="margin-bottom: 1.5rem;">Table 3. Available Computational Resources</h3>
-            <table class="data-table resources-table">
-                <thead>
-                    <tr>
-                        <th>Resource Type</th>
-                        <th>Description</th>
-                        <th>Access Link</th>
-                        <th>Format</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Dataset Download</td>
-                        <td>Automated scripts for downloading WGS data from NCBI/PATRIC</td>
-                        <td><a href="https://github.com/XHCFS/amr-fgcr-prediction-project/blob/main/Notebooks/Downloading_Dataset.ipynb">GitHub</a></td>
-                        <td>Jupyter Notebook</td>
-                    </tr>
-                    <tr>
-                        <td>ABRicate Prediction Generation</td>
-                        <td>Script for generating ABRicate predictions and storing them</td>
-                        <td><a href="https://github.com/XHCFS/amr-fgcr-prediction-project/blob/main/Notebooks/ABRicate_Prediction_Generation.ipynb">GitHub</a></td>
-                        <td>Jupyter Notebook</td>
-                    </tr>
-                    <tr>
-                        <td>ABRicate Metrics Generation</td>
-                        <td>Script for evaluating ABRicate results using the same metrics</td>
-                        <td><a href="https://github.com/XHCFS/amr-fgcr-prediction-project/blob/main/Notebooks/ABRicate_Metrics_Generation.ipynb">GitHub</a></td>
-                        <td>Jupyter Notebook</td>
-                    </tr>
-                    
-                    <tr>
-                        <td>Master Table Creation</td>
-                        <td>Integration of phenotypic data with genomic metadata</td>
-                        <td><a href="https://github.com/XHCFS/amr-fgcr-prediction-project/blob/main/Notebooks/Master_Table.ipynb">GitHub</a></td>
-                        <td>Jupyter Notebook</td>
-                    </tr>
-                    <tr>
-                        <td>FCGR Encoding</td>
-                        <td>Frequency Chaos Game Representation image generation</td>
-                        <td><a href="https://github.com/XHCFS/amr-fgcr-prediction-project/blob/main/Notebooks/FCGR_Encoding.ipynb">GitHub</a></td>
-                        <td>Jupyter Notebook</td>
-                    </tr>
-                    <tr>
-                        <td>Drug Selection & Filtering</td>
-                        <td>Quality-based drug selection and dataset filtering</td>
-                        <td><a href="https://github.com/XHCFS/amr-fgcr-prediction-project/blob/main/Notebooks/Drug_Selection_%26_Filtering.ipynb">GitHub</a></td>
-                        <td>Jupyter Notebook</td>
-                    </tr>
-                    <tr>
-                        <td>Homology-Aware Splitting</td>
-                        <td>Sequence similarity clustering for data leakage prevention</td>
-                        <td><a href="https://github.com/XHCFS/amr-fgcr-prediction-project/blob/main/Notebooks/Homology_Aware_Clusters.ipynb">GitHub</a></td>
-                        <td>Jupyter Notebook</td>
-                    </tr>
-                    <tr>
-                        <td>Model Training Pipeline</td>
-                        <td>PyTorch/FastAI implementation with cross-validation</td>
-                        <td><a href="https://github.com/XHCFS/amr-fgcr-prediction-project/blob/main/Notebooks/Model_Training_Pipeline.ipynb">GitHub</a></td>
-                        <td>Jupyter Notebook</td>
-                    </tr>
-                    <tr>
-                        <td>Complete Dataset Archive</td>
-                        <td>Processed datasets, models, and supplementary materials</td>
-                        <td><a href="https://drive.google.com/drive/folders/13LGqe__ULhjG0hZmpgxz8WqE0fNXsVNQ?usp=drive_link">Google Drive</a></td>
-                        <td>Archive</td>
-                    </tr>
-                    
-                </tbody>
-            </table>
+            <h3>Available Computational Resources</h3>
+            <div class="table-wrapper">
+                <div class="table-header">Code Repositories and Data Downloads</div>
+                <div class="table-scrollable">
+                    <table class="data-table resources-table">
+                        <thead>
+                            <tr>
+                                <th>Resource Type</th>
+                                <th>Description</th>
+                                <th>Access Link</th>
+                                <th>Format</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Dataset Download</td>
+                                <td>Automated scripts for downloading WGS data from NCBI/PATRIC</td>
+                                <td><a href="https://github.com/XHCFS/amr-fgcr-prediction-project/blob/main/Notebooks/Downloading_Dataset.ipynb">GitHub</a></td>
+                                <td>Jupyter Notebook</td>
+                            </tr>
+                            <tr>
+                                <td>ABRicate Prediction Generation</td>
+                                <td>Script for generating ABRicate predictions and storing them</td>
+                                <td><a href="https://github.com/XHCFS/amr-fgcr-prediction-project/blob/main/Notebooks/ABRicate_Prediction_Generation.ipynb">GitHub</a></td>
+                                <td>Jupyter Notebook</td>
+                            </tr>
+                            <tr>
+                                <td>ABRicate Metrics Generation</td>
+                                <td>Script for evaluating ABRicate results using the same metrics</td>
+                                <td><a href="https://github.com/XHCFS/amr-fgcr-prediction-project/blob/main/Notebooks/ABRicate_Metrics_Generation.ipynb">GitHub</a></td>
+                                <td>Jupyter Notebook</td>
+                            </tr>
+                            <tr>
+                                <td>Master Table Creation</td>
+                                <td>Integration of phenotypic data with genomic metadata</td>
+                                <td><a href="https://github.com/XHCFS/amr-fgcr-prediction-project/blob/main/Notebooks/Master_Table.ipynb">GitHub</a></td>
+                                <td>Jupyter Notebook</td>
+                            </tr>
+                            <tr>
+                                <td>FCGR Encoding</td>
+                                <td>Frequency Chaos Game Representation image generation</td>
+                                <td><a href="https://github.com/XHCFS/amr-fgcr-prediction-project/blob/main/Notebooks/FCGR_Encoding.ipynb">GitHub</a></td>
+                                <td>Jupyter Notebook</td>
+                            </tr>
+                            <tr>
+                                <td>Drug Selection & Filtering</td>
+                                <td>Quality-based drug selection and dataset filtering</td>
+                                <td><a href="https://github.com/XHCFS/amr-fgcr-prediction-project/blob/main/Notebooks/Drug_Selection_%26_Filtering.ipynb">GitHub</a></td>
+                                <td>Jupyter Notebook</td>
+                            </tr>
+                            <tr>
+                                <td>Homology-Aware Splitting</td>
+                                <td>Sequence similarity clustering for data leakage prevention</td>
+                                <td><a href="https://github.com/XHCFS/amr-fgcr-prediction-project/blob/main/Notebooks/Homology_Aware_Clusters.ipynb">GitHub</a></td>
+                                <td>Jupyter Notebook</td>
+                            </tr>
+                            <tr>
+                                <td>Model Training Pipeline</td>
+                                <td>PyTorch/FastAI implementation with cross-validation</td>
+                                <td><a href="https://github.com/XHCFS/amr-fgcr-prediction-project/blob/main/Notebooks/Model_Training_Pipeline.ipynb">GitHub</a></td>
+                                <td>Jupyter Notebook</td>
+                            </tr>
+                            <tr>
+                                <td>Complete Dataset Archive</td>
+                                <td>Processed datasets, models, and supplementary materials</td>
+                                <td><a href="https://drive.google.com/drive/folders/13LGqe__ULhjG0hZmpgxz8WqE0fNXsVNQ?usp=drive_link">Google Drive</a></td>
+                                <td>Archive</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <div class="figure-caption">
-                <strong>Table 3.</strong> Comprehensive list of computational resources supporting reproducible research. All notebooks include detailed documentation and can be executed in Google Colab environment.
+                <strong>Table 2.</strong> Comprehensive list of computational resources supporting reproducible research. All notebooks include detailed documentation and can be executed in Google Colab environment.
             </div>
         </div>
 
@@ -1598,5 +1465,347 @@
         </div>
       </div>
     </footer>
+
+    <!-- JavaScript for Dynamic Content Loading -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script>
+      // Smart table rendering function that decides between regular, transposed, or card layout
+      function renderSmartTable(file, containerId, captionText, tableTitle) {
+        Papa.parse(file, {
+          download: true,
+          header: true,
+          complete: function (results) {
+            if (results.data.length === 0) return;
+            
+            const container = document.getElementById(containerId);
+            const wrapper = document.createElement("div");
+            wrapper.classList.add("figure-container");
+            
+            // Add table title if provided
+            if (tableTitle) {
+              const titleElement = document.createElement("h4");
+              titleElement.textContent = tableTitle;
+              titleElement.style.marginBottom = "1rem";
+              titleElement.style.color = "var(--primary-dark)";
+              wrapper.appendChild(titleElement);
+            }
+            
+            const numCols = results.meta.fields.length;
+            const numRows = results.data.filter(row => Object.values(row).some(v => v !== "")).length;
+            
+            // Special handling for specific table types
+            if (file.includes("general_model_overall_null_percentages.csv")) {
+              renderInfoBoxes(results.data, wrapper);
+            } else if (numCols <= 3 && numRows > 3) {
+              // Transpose narrow tables
+              renderTransposedTable(results, wrapper);
+            } else if (numCols > 6 || (numCols * numRows > 50)) {
+              // Scrollable for large tables
+              renderScrollableTable(results, wrapper);
+            } else {
+              // Regular table for moderate size
+              renderRegularTable(results, wrapper);
+            }
+            
+            // Add caption
+            const caption = document.createElement("div");
+            caption.classList.add("figure-caption");
+            caption.innerHTML = `<strong>${captionText}</strong>`;
+            wrapper.appendChild(caption);
+            
+            container.appendChild(wrapper);
+          }
+        });
+      }
+      
+      function renderInfoBoxes(data, container) {
+        const wrapper = document.createElement("div");
+        wrapper.style.display = "grid";
+        wrapper.style.gridTemplateColumns = "repeat(auto-fit, minmax(200px, 1fr))";
+        wrapper.style.gap = "1rem";
+        wrapper.style.margin = "1rem 0";
+        
+        data.forEach((row) => {
+          Object.keys(row).forEach((drug) => {
+            if (drug && row[drug] && row[drug] !== "0" && row[drug] !== "") {
+              const card = document.createElement("div");
+              card.style.padding = "1rem";
+              card.style.background = "var(--bg-color)";
+              card.style.borderLeft = "4px solid var(--primary-color)";
+              card.style.borderRadius = "4px";
+              card.innerHTML = `<strong>${drug}:</strong> ${row[drug]}% nulls`;
+              wrapper.appendChild(card);
+            }
+          });
+        });
+        container.appendChild(wrapper);
+      }
+      
+      function renderTransposedTable(results, container) {
+        const transposed = document.createElement("div");
+        transposed.classList.add("transposed-table");
+        
+        results.data.forEach((row, index) => {
+          if (Object.values(row).some(v => v !== "")) {
+            results.meta.fields.forEach((field) => {
+              if (row[field] !== "") {
+                const transposedRow = document.createElement("div");
+                transposedRow.classList.add("transposed-row");
+                
+                const label = document.createElement("div");
+                label.classList.add("transposed-label");
+                label.textContent = field;
+                
+                const value = document.createElement("div");
+                value.classList.add("transposed-value");
+                value.textContent = row[field];
+                
+                transposedRow.appendChild(label);
+                transposedRow.appendChild(value);
+                transposed.appendChild(transposedRow);
+              }
+            });
+          }
+        });
+        container.appendChild(transposed);
+      }
+      
+      function renderScrollableTable(results, container) {
+        const tableWrapper = document.createElement("div");
+        tableWrapper.classList.add("table-wrapper");
+        
+        const scrollable = document.createElement("div");
+        scrollable.classList.add("table-scrollable");
+        
+        const table = document.createElement("table");
+        table.classList.add("data-table");
+        
+        // Header
+        const thead = document.createElement("thead");
+        const headerRow = document.createElement("tr");
+        results.meta.fields.forEach((field) => {
+          const th = document.createElement("th");
+          th.textContent = field;
+          headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+        
+        // Body
+        const tbody = document.createElement("tbody");
+        results.data.forEach((row) => {
+          if (Object.values(row).some(v => v !== "")) {
+            const tr = document.createElement("tr");
+            results.meta.fields.forEach((field) => {
+              const td = document.createElement("td");
+              td.textContent = row[field];
+              tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+          }
+        });
+        table.appendChild(tbody);
+        
+        scrollable.appendChild(table);
+        tableWrapper.appendChild(scrollable);
+        container.appendChild(tableWrapper);
+      }
+      
+      function renderRegularTable(results, container) {
+        const table = document.createElement("table");
+        table.classList.add("data-table");
+        table.style.margin = "1rem 0";
+        
+        // Header
+        const thead = document.createElement("thead");
+        const headerRow = document.createElement("tr");
+        results.meta.fields.forEach((field) => {
+          const th = document.createElement("th");
+          th.textContent = field;
+          headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+        
+        // Body
+        const tbody = document.createElement("tbody");
+        results.data.forEach((row) => {
+          if (Object.values(row).some(v => v !== "")) {
+            const tr = document.createElement("tr");
+            results.meta.fields.forEach((field) => {
+              const td = document.createElement("td");
+              td.textContent = row[field];
+              tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+          }
+        });
+        table.appendChild(tbody);
+        container.appendChild(table);
+      }
+
+      // === EDA TABLES - Methods Section ===
+      const generalEDAFiles = {
+        "eda_results/general_model_label_ratio_per_species.csv": "Label ratio per species",
+        "eda_results/general_model_null_percentages_per_species.csv": "Null percentages per species", 
+        "eda_results/general_model_overall_label_ratio.csv": "Overall label ratio",
+        "eda_results/general_model_overall_null_percentages.csv": "Overall null percentages",
+        "eda_results/general_model_species_distribution.csv": "Species distribution"
+      };
+
+      const salmonellaEDAFiles = {
+        "eda_results/salmonella_only_label_ratio_per_drug.csv": "Label ratio per antibiotic",
+        "eda_results/salmonella_only_null_percentages_per_drug.csv": "Null percentages per antibiotic",
+        "eda_results/salmonella_only_overall_null_percentage.csv": "Overall null percentage summary"
+      };
+
+      // Render EDA tables in Methods section
+      Object.keys(generalEDAFiles).forEach((file) => {
+        renderSmartTable(file, "general-model-eda-tables", generalEDAFiles[file], generalEDAFiles[file]);
+      });
+
+      Object.keys(salmonellaEDAFiles).forEach((file) => {
+        renderSmartTable(file, "salmonella-model-eda-tables", salmonellaEDAFiles[file], salmonellaEDAFiles[file]);
+      });
+
+      // === RESULTS TABLES - Results Section ===
+      const generalResultsFiles = {
+        "Results/General Model/Cross_Validation_Metrics_Mean_per_class.csv": "Cross-validation mean metrics per class",
+        "Results/General Model/Cross_Validation_Metrics_SD_per_class.csv": "Cross-validation standard deviation per class",
+        "Results/General Model/Cross_Validation_Metrics_summary.csv": "Cross-validation summary metrics",
+        "Results/General Model/Test_Metrics.csv": "Test set overall metrics",
+        "Results/General Model/Test_Metrics_per_class.csv": "Test set metrics per antibiotic class",
+        "Results/General Model/Test_Metrics_per_species.csv": "Test set metrics per species"
+      };
+
+      const salmonellaResultsFiles = {
+        "Results/Salmonella Enterica/Cross_Validation_Metrics_Mean_per_class.csv": "Cross-validation mean metrics per class",
+        "Results/Salmonella Enterica/Cross_Validation_Metrics_SD_per_class.csv": "Cross-validation standard deviation per class", 
+        "Results/Salmonella Enterica/Cross_Validation_Metrics_summary.csv": "Cross-validation summary metrics",
+        "Results/Salmonella Enterica/Test_Metrics.csv": "Test set overall metrics",
+        "Results/Salmonella Enterica/Test_Metrics_per_class.csv": "Test set metrics per antibiotic class"
+      };
+
+      // Render Results tables in Results section
+      Object.keys(generalResultsFiles).forEach((file) => {
+        renderSmartTable(file, "general-model-results-tables", generalResultsFiles[file], generalResultsFiles[file]);
+      });
+
+      Object.keys(salmonellaResultsFiles).forEach((file) => {
+        renderSmartTable(file, "salmonella-model-results-tables", salmonellaResultsFiles[file], salmonellaResultsFiles[file]);
+      });
+
+      // === FCGR SAMPLE IMAGES ===
+      const fcgrImages = [
+        { file: "FCGR_Samples/Staphylococcus_aureus.png", label: "Staphylococcus aureus FCGR pattern" },
+        { file: "FCGR_Samples/Salmonella_enterica.png", label: "Salmonella enterica FCGR pattern" },
+        { file: "FCGR_Samples/Escherichia_coli.png", label: "Escherichia coli FCGR pattern" }
+      ];
+      
+      const fcgrContainer = document.getElementById("fcgr-images");
+      fcgrImages.forEach((img) => {
+        const div = document.createElement("div");
+        div.classList.add("image-item");
+        div.innerHTML = `
+          <img src="${img.file}" alt="${img.label}" />
+          <p class="image-label">${img.label}</p>
+        `;
+        fcgrContainer.appendChild(div);
+      });
+
+      // === CORRELATION MATRICES ===
+      const correlationImages = [
+        { 
+          file: "eda_results/general_model_Staphylococcus_aureus_correlation_matrix.png", 
+          label: "S. aureus resistance profile correlations" 
+        },
+        { 
+          file: "eda_results/general_model_Salmonella_enterica_correlation_matrix.png", 
+          label: "S. enterica resistance profile correlations" 
+        },
+        { 
+          file: "eda_results/general_model_Escherichia_coli_correlation_matrix.png", 
+          label: "E. coli resistance profile correlations" 
+        },
+        { 
+          file: "eda_results/general_model_overall_correlation_matrix.png", 
+          label: "Overall dataset resistance correlations" 
+        },
+        { 
+          file: "eda_results/salmonella_only_correlation_matrix.png", 
+          label: "Salmonella-specific model correlations" 
+        }
+      ];
+      
+      const correlationContainer = document.getElementById("eda-images");
+      correlationImages.forEach((img) => {
+        const div = document.createElement("div");
+        div.classList.add("image-item");
+        div.innerHTML = `
+          <img src="${img.file}" alt="${img.label}" />
+          <p class="image-label">${img.label}</p>
+        `;
+        correlationContainer.appendChild(div);
+      });
+
+      // === RESULTS FIGURES ===
+      const resultsFigures = [
+        { 
+          file: "Results/General Model/Label_Coverage.png", 
+          label: "General Model - Label coverage distribution" 
+        },
+        { 
+          file: "Results/Salmonella Enterica/Label_Coverage.png", 
+          label: "Salmonella Model - Label coverage distribution" 
+        },
+        { 
+          file: "Results/General Model/Confusion Matrices/Cross_Validation_Metrics_Mean_per_class.png", 
+          label: "General Model - Cross-validation confusion matrix" 
+        },
+        { 
+          file: "Results/Salmonella Enterica/Confusion Matrices/Cross_Validation_Metrics_Mean_per_class.png", 
+          label: "Salmonella Model - Cross-validation confusion matrix" 
+        }
+      ];
+      
+      const resultsContainer = document.getElementById("results-images");
+      resultsFigures.forEach((img) => {
+        const div = document.createElement("div");
+        div.classList.add("image-item");
+        div.innerHTML = `
+          <img src="${img.file}" alt="${img.label}" />
+          <p class="image-label">${img.label}</p>
+        `;
+        resultsContainer.appendChild(div);
+      });
+
+      // Error handling for missing images
+      document.addEventListener('DOMContentLoaded', function() {
+        const images = document.querySelectorAll('img');
+        images.forEach(img => {
+          img.onerror = function() {
+            this.style.display = 'none';
+            const parent = this.parentElement;
+            if (parent && parent.classList.contains('image-item')) {
+              const placeholder = document.createElement('div');
+              placeholder.style.cssText = `
+                width: 100%;
+                height: 300px;
+                background: linear-gradient(45deg, #f0f0f0 25%, #e0e0e0 25%, #e0e0e0 50%, #f0f0f0 50%, #f0f0f0 75%, #e0e0e0 75%, #e0e0e0);
+                background-size: 20px 20px;
+                border: 1px solid var(--border-color);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--text-secondary);
+                font-style: italic;
+              `;
+              placeholder.textContent = 'Image not available';
+              parent.insertBefore(placeholder, this);
+            }
+          };
+        });
+      });
+    </script>
 </body>
 </html>
