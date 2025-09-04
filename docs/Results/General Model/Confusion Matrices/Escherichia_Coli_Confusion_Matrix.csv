@@ -1,4 +1,4 @@
 Drug,TN,FP,FN,TP
-Tetracycline,97,8,11,30
-Gentamicin,173,14,124,575
-Total,270,22,135,605
+Tetracycline,7,6,19,24
+Gentamicin,334,50,26,33
+Total,341,56,45,57
