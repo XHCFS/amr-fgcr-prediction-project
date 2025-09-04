@@ -702,40 +702,77 @@
     <!-- Hero Section -->
     <section class="hero" id="abstract">
         <div class="hero-content">
-            <h1>Deep Learning-Based Prediction of Antimicrobial Resistance from Whole Genome Sequences</h1>
+            <h1>Species-Agnostic Antimicrobial Resistance Prediction
+                using Frequency Chaos Game Representation and
+                Deep Convolutional Neural Networks</h1>
             <p class="hero-authors">Saifelden Mohamed, Salma Hatem</p>
             <p class="hero-affiliation">Zewail City of Science and Technology, Giza, Egypt</p>
             
             <div class="abstract-section">
                 <div class="abstract-label">Abstract</div>
                 <p class="hero-description">
-                    Antimicrobial resistance (AMR) poses a critical threat to global public health, necessitating rapid and accurate diagnostic methods. We present a comprehensive deep learning framework for predicting antimicrobial resistance directly from bacterial whole genome sequences. Our approach employs Frequency Chaos Game Representation (FCGR) to transform variable-length genomic sequences into fixed-size numerical representations suitable for convolutional neural network analysis. Using a modified ResNet18 architecture, we evaluated our model across three clinically relevant bacterial species: <em>Staphylococcus aureus</em>, <em>Salmonella enterica</em>, and <em>Escherichia coli</em>. The framework achieved accuracies ranging from [TO BE UPDATED] across [TO BE UPDATED] antibiotics, with particularly strong performance for <em>[TO BE UPDATED]</em>. Our species-agnostic model demonstrated [TO BE UPDATED]% accuracy, suggesting potential for generalized AMR detection across diverse bacterial pathogens. This work contributes to the growing body of evidence supporting machine learning approaches for rapid AMR screening in clinical settings.
+                      Antimicrobial resistance (AMR) poses a critical threat to global
+                      public health, necessitating rapid and accurate diagnostic methods. We
+                      present a deep learning framework for predicting AMR directly from
+                      bacterial whole genome sequences using Frequency Chaos Game
+                      Representation (FCGR). Two models were developed: (1) a
+                      <strong>species-specific model</strong> trained on
+                      <em>Salmonella enterica</em> across 8 antibiotics
+                      (Tetracycline, Ampicillin, Amoxicillin-Clavulanic acid, Cefoxitin,
+                      Ceftiofur, Gentamicin, Ceftriaxone, Chloramphenicol), achieving an
+                      overall AUC of <strong>85%</strong>; and (2) a
+                      <strong>species-agnostic model</strong> trained on
+                      <em>Staphylococcus aureus</em>, <em>Salmonella enterica</em>, and
+                      <em>Escherichia coli</em> for Gentamicin and Tetracycline resistance,
+                      achieving an overall AUC of <strong>93%</strong>. The latter model
+                      operates without species labels, suggesting it learns
+                      species-independent genomic biomarkers of resistance. Despite sparse
+                      data for <em>E. coli</em> (85% missing labels for Gentamicin), the
+                      model maintained strong predictive performance, highlighting its
+                      robustness and generalization ability. These findings demonstrate the
+                      potential of alignment-free, species-agnostic deep learning for rapid
+                      AMR prediction in clinical and surveillance contexts.
                 </p>
             </div>
 
             <!-- Quick Access Links -->
             <div class="quick-access">
-                <a href="#" class="access-button">Read Preprint (bioRxiv)</a>
-                <a href="#" class="access-button secondary">Try Interactive Demo</a>
-                <a href="#resources" class="access-button tertiary">View Code & Data</a>
+                <a href="" class="access-button">Read Preprint (bioRxiv)</a>
+                <a href="https://huggingface.co/spaces/fcgr-amr-project/fcgr-amr-project" class="access-button secondary">Try Interactive Demo</a>
+                <a href="https://github.com/XHCFS/amr-fgcr-prediction-project" class="access-button tertiary">View Code & Data</a>
             </div>
             
             <div class="key-metrics">
+                <!-- Salmonella-specific model -->
                 <div class="metric-item">
-                    <div class="metric-value">[TBD]</div>
-                    <div class="metric-label">Bacterial Genomes Analyzed</div>
+                    <div class="metric-value">~5,000</div>
+                    <div class="metric-label">Genomes (Salmonella-specific model)</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">8</div>
+                    <div class="metric-label">Antibiotics Tested (Salmonella)</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">85%</div>
+                    <div class="metric-label">Overall AUC (Salmonella model)</div>
+                </div>
+            
+                <!-- Species-agnostic model -->
+                <div class="metric-item">
+                    <div class="metric-value">10,079</div>
+                    <div class="metric-label">Genomes (Species-agnostic model)</div>
                 </div>
                 <div class="metric-item">
                     <div class="metric-value">3</div>
-                    <div class="metric-label">Bacterial Species</div>
+                    <div class="metric-label">Species (<em>S. aureus</em>, <em>S. enterica</em>, <em>E. coli</em>)</div>
                 </div>
                 <div class="metric-item">
-                    <div class="metric-value">[TBD]</div>
-                    <div class="metric-label">Antibiotics Tested</div>
+                    <div class="metric-value">2</div>
+                    <div class="metric-label">Antibiotics Tested (Gentamicin, Tetracycline)</div>
                 </div>
                 <div class="metric-item">
-                    <div class="metric-value">[TBD]%</div>
-                    <div class="metric-label">Peak Accuracy</div>
+                    <div class="metric-value">93%</div>
+                    <div class="metric-label">Overall AUC (Species-agnostic model)</div>
                 </div>
             </div>
         </div>
@@ -743,182 +780,410 @@
 
     <!-- Methods Section -->
     <section id="methods">
-        <div class="section-header">
-            <h2 class="section-title">Materials and Methods</h2>
-            <p class="section-subtitle">Comprehensive pipeline from genomic data to resistance predictions</p>
+      <div class="section-header">
+        <h2 class="section-title">Materials and Methods</h2>
+        <p class="section-subtitle">
+          Comprehensive pipeline from genomic data to resistance predictions
+        </p>
+      </div>
+    
+      <!-- Pipeline overview -->
+      <div class="methodology-flow">
+        <div class="method-step">
+          <h4>1. Data Collection</h4>
+          <p>
+            Whole genome sequences were curated from NCBI and PATRIC databases with
+            validated phenotypic resistance profiles. The final dataset included
+            10,079 genomes across three species (<em>S. aureus</em>,
+            <em>S. enterica</em>, <em>E. coli</em>).
+          </p>
         </div>
-
-        <div class="methodology-flow">
-            <div class="method-step">
-                <h4>1. Data Collection</h4>
-                <p>Curated whole genome sequences from NCBI and PATRIC databases with validated phenotypic resistance profiles</p>
-            </div>
-            <div class="method-step">
-                <h4>2. FCGR Encoding</h4>
-                <p>Transformed FASTA sequences into 256×256 grayscale images using 8-mer frequency analysis</p>
-            </div>
-            <div class="method-step">
-                <h4>3. Model Training</h4>
-                <p>Modified ResNet18 architecture with homology-aware data splitting and 5-fold cross-validation</p>
-            </div>
-            <div class="method-step">
-                <h4>4. Validation</h4>
-                <p>Masked evaluation metrics accounting for incomplete resistance profiles</p>
-            </div>
+        <div class="method-step">
+          <h4>2. FCGR Encoding</h4>
+          <p>
+            Genomes were transformed into 256×256 grayscale images using 8-mer
+            frequency analysis. This alignment-free encoding captures both local
+            sequence motifs and global compositional biases.
+          </p>
         </div>
-
-        <div class="figure-container">
-            <h3 style="margin-bottom: 1.5rem;">Table 1. Dataset Characteristics</h3>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Species</th>
-                        <th>Sample Size</th>
-                        <th>Source</th>
-                        <th>Antibiotics Tested</th>
-                        <th>Mean Accuracy (%)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><em>Staphylococcus aureus</em></td>
-                        <td>[TBD]</td>
-                        <td>NCBI, PATRIC</td>
-                        <td>[TBD]</td>
-                        <td>[TBD] ± [TBD]</td>
-                    </tr>
-                    <tr>
-                        <td><em>Salmonella enterica</em></td>
-                        <td>[TBD]</td>
-                        <td>PRJNA292661</td>
-                        <td>[TBD]</td>
-                        <td>[TBD] ± [TBD]</td>
-                    </tr>
-                    <tr>
-                        <td><em>Escherichia coli</em></td>
-                        <td>[TBD]</td>
-                        <td>NCBI, PATRIC</td>
-                        <td>[TBD]</td>
-                        <td>[TBD] ± [TBD]</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="figure-caption">
-                <strong>Table 1.</strong> Summary of the three bacterial species included in the final study with corresponding sample sizes, data sources, number of antibiotics tested, and mean classification accuracy with standard deviation across 5-fold cross-validation.
-            </div>
+        <div class="method-step">
+          <h4>3. Model Training</h4>
+          <p>
+            A modified ResNet18 architecture was trained with homology-aware
+            splitting and 5-fold cross-validation. Two models were developed: (i) a
+            Salmonella-specific model across 8 antibiotics, and (ii) a
+            species-agnostic model across 3 species for Gentamicin and Tetracycline.
+          </p>
         </div>
-
-        <div class="fcgr-display">
-            <h3>Frequency Chaos Game Representation (FCGR)</h3>
-            <p style="margin-bottom: 1.5rem; line-height: 1.8;">
-                FCGR provides an alignment-free method for encoding genomic sequences as numerical matrices. Each genome is represented as a 256×256 matrix where each element corresponds to the normalized frequency of a specific 8-mer. This representation captures both local sequence patterns and global compositional biases while maintaining computational efficiency.
-            </p>
-            <div class="fcgr-grid">
-                <div class="fcgr-item">
-                    <div class="fcgr-placeholder"></div>
-                    <p class="fcgr-label">S. aureus FCGR pattern</p>
-                </div>
-                <div class="fcgr-item">
-                    <div class="fcgr-placeholder"></div>
-                    <p class="fcgr-label">S. enterica FCGR pattern</p>
-                </div>
-                <div class="fcgr-item">
-                    <div class="fcgr-placeholder"></div>
-                    <p class="fcgr-label">E. coli FCGR pattern</p>
-                </div>
-            </div>
-            <div class="figure-caption">
-                <strong>Figure 1.</strong> Representative FCGR images for the three bacterial species showing distinct genomic signatures. Each pixel intensity represents the normalized frequency of a specific 8-mer sequence.
-            </div>
+        <div class="method-step">
+          <h4>4. Validation</h4>
+          <p>
+            Evaluation metrics included AUC, MCC, and masked accuracy to account for
+            incomplete resistance profiles. Confusion matrices and per-class metrics
+            were generated for both models.
+          </p>
         </div>
+      </div>
+    
+      <!-- Dynamic CSV Tables -->
+      <div class="figure-container">
+        <h3>Exploratory Data Analysis (EDA)</h3>
+        <div id="csv-tables"></div>
+      </div>
+    
+      <!-- FCGR Samples -->
+      <div class="fcgr-display">
+        <h3>Frequency Chaos Game Representation (FCGR)</h3>
+        <div class="fcgr-grid" id="fcgr-images"></div>
+        <div class="figure-caption">
+          <strong>Figure 1.</strong> Representative FCGR images for the three
+          bacterial species showing distinct genomic signatures.
+        </div>
+      </div>
+    
+      <!-- Correlation Matrices -->
+      <div class="figure-container">
+        <h3>Correlation Matrices</h3>
+        <div class="fcgr-grid" id="eda-images"></div>
+        <div class="figure-caption">
+          <strong>Figure 2.</strong> Correlation matrices of resistance profiles for
+          each species and overall dataset.
+        </div>
+      </div>
     </section>
+    
+    <!-- PapaParse for CSV parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script>
+      // === CSVs with manual labels ===
+      const csvFiles = {
+        "eda_results/general_model_label_ratio_per_species.csv":
+          "Table 1. Label ratio per species (General Model)",
+        "eda_results/general_model_null_percentages_per_species.csv":
+          "Table 2. Null percentages per species (General Model)",
+        "eda_results/general_model_overall_label_ratio.csv":
+          "Table 3. Overall label ratio (General Model)",
+        "eda_results/general_model_overall_null_percentages.csv":
+          "Table 4. Overall null percentages (General Model)",
+        "eda_results/general_model_species_distribution.csv":
+          "Table 5. Species distribution (General Model)",
+        "eda_results/salmonella_only_label_ratio_per_drug.csv":
+          "Table 6. Label ratio per drug (Salmonella Model)",
+        "eda_results/salmonella_only_null_percentages_per_drug.csv":
+          "Table 7. Null percentages per drug (Salmonella Model)",
+        "eda_results/salmonella_only_overall_null_percentage.csv":
+          "Table 8. Overall null percentage (Salmonella Model)",
+      };
+    
+      const csvContainer = document.getElementById("csv-tables");
+    
+      function renderCSV(file, captionText) {
+        Papa.parse(file, {
+          download: true,
+          header: true,
+          complete: function (results) {
+            if (results.data.length > 0) {
+              const table = document.createElement("table");
+              table.classList.add("data-table");
+    
+              // Header
+              const thead = document.createElement("thead");
+              const headerRow = document.createElement("tr");
+              results.meta.fields.forEach((field) => {
+                const th = document.createElement("th");
+                th.textContent = field;
+                headerRow.appendChild(th);
+              });
+              thead.appendChild(headerRow);
+              table.appendChild(thead);
+    
+              // Body
+              const tbody = document.createElement("tbody");
+              results.data.forEach((row) => {
+                if (Object.values(row).some((v) => v !== "")) {
+                  const tr = document.createElement("tr");
+                  results.meta.fields.forEach((field) => {
+                    const td = document.createElement("td");
+                    td.textContent = row[field];
+                    tr.appendChild(td);
+                  });
+                  tbody.appendChild(tr);
+                }
+              });
+              table.appendChild(tbody);
+    
+              // Caption
+              const caption = document.createElement("div");
+              caption.classList.add("figure-caption");
+              caption.innerHTML = `<strong>${captionText}</strong>`;
+    
+              // Wrap
+              const wrapper = document.createElement("div");
+              wrapper.style.marginBottom = "2rem";
+              wrapper.appendChild(table);
+              wrapper.appendChild(caption);
+    
+              csvContainer.appendChild(wrapper);
+            }
+          },
+        });
+      }
+    
+      Object.keys(csvFiles).forEach((file) => {
+        renderCSV(file, csvFiles[file]);
+      });
+    
+      // === FCGR sample images ===
+      const fcgrImages = [
+        { file: "FCGR_Samples/Staphylococcus aureus.png", label: "S. aureus" },
+        { file: "FCGR_Samples/Salmonella enterica.png", label: "S. enterica" },
+        { file: "FCGR_Samples/Escherichia coli.png", label: "E. coli" },
+      ];
+      const fcgrContainer = document.getElementById("fcgr-images");
+      fcgrImages.forEach((img) => {
+        const div = document.createElement("div");
+        div.classList.add("fcgr-item");
+        div.innerHTML = `
+          <img src="${img.file}" alt="${img.label}" style="width:100%; border:1px solid var(--border-color)" />
+          <p class="fcgr-label"><em>${img.label}</em> FCGR pattern</p>
+        `;
+        fcgrContainer.appendChild(div);
+      });
+    
+      // === Correlation matrices ===
+      const edaImages = {
+        "eda_results/general_model_Staphylococcus_aureus_correlation_matrix.png":
+          "Figure 3. Correlation matrix of resistance profiles (S. aureus)",
+        "eda_results/general_model_Salmonella_enterica_correlation_matrix.png":
+          "Figure 4. Correlation matrix of resistance profiles (S. enterica)",
+        "eda_results/general_model_Escherichia_coli_correlation_matrix.png":
+          "Figure 5. Correlation matrix of resistance profiles (E. coli)",
+        "eda_results/general_model_overall_correlation_matrix.png":
+          "Figure 6. Overall correlation matrix (General Model)",
+        "eda_results/salmonella_only_correlation_matrix.png":
+          "Figure 7. Correlation matrix (Salmonella Model)",
+      };
+    
+      const edaContainer = document.getElementById("eda-images");
+      Object.keys(edaImages).forEach((file) => {
+        const div = document.createElement("div");
+        div.classList.add("fcgr-item");
+        div.innerHTML = `
+          <img src="${file}" alt="${edaImages[file]}" style="width:100%; border:1px solid var(--border-color)" />
+          <p class="fcgr-label">${edaImages[file]}</p>
+        `;
+        edaContainer.appendChild(div);
+      });
+    </script>
 
+
+    
     <!-- Results Section -->
     <section id="results">
-        <div class="section-header">
-            <h2 class="section-title">Results and Discussion</h2>
-            <p class="section-subtitle">Performance evaluation across species and antibiotics</p>
+      <div class="section-header">
+        <h2 class="section-title">Results and Discussion</h2>
+        <p class="section-subtitle">
+          Performance evaluation across species and antibiotics
+        </p>
+      </div>
+    
+      <!-- Overview cards -->
+      <div class="results-grid">
+        <div class="result-card">
+          <h4>Salmonella-Specific Model</h4>
+          <p>
+            The Salmonella-only model was trained on 8 antibiotics and achieved an
+            overall AUC of ~85%. Performance varied across antibiotics but remained
+            robust despite dataset imbalance.
+          </p>
         </div>
-
-        <div class="results-grid">
-            <div class="result-card">
-                <h4>Species-Specific Models</h4>
-                <p>Individual models trained for each species demonstrated robust performance with accuracies ranging from [TBD]% to [TBD]%. The variation in performance correlates with dataset size, genomic complexity, and the quality of phenotypic annotations.</p>
-                <ul style="margin-top: 1rem; padding-left: 1.5rem; line-height: 1.8;">
-                    <li><em>Staphylococcus aureus</em>: [TBD]% mean accuracy</li>
-                    <li><em>Salmonella enterica</em>: [TBD]% mean accuracy</li>
-                    <li><em>Escherichia coli</em>: [TBD]% mean accuracy</li>
-                </ul>
-            </div>
-            <div class="result-card">
-                <h4>Species-Agnostic Model</h4>
-                <p>The unified model trained on all three species achieved [TBD]% overall accuracy, demonstrating the potential for developing generalized AMR prediction systems. Key findings include:</p>
-                <ul style="margin-top: 1rem; padding-left: 1.5rem; line-height: 1.8;">
-                    <li>Consistent performance across [DRUG CLASS TO BE UPDATED]</li>
-                    <li>Reduced accuracy for [DRUG CLASS TO BE UPDATED]</li>
-                    <li>Strong generalization to unseen species combinations</li>
-                </ul>
-            </div>
+        <div class="result-card">
+          <h4>Species-Agnostic Model</h4>
+          <p>
+            The general model trained on 10,079 genomes across 3 species achieved an
+            overall AUC of ~93%. Despite sparse data for <em>E. coli</em> (85% null
+            labels for Gentamicin), the model maintained strong predictive
+            performance, suggesting it learns cross-species biomarkers of
+            resistance.
+          </p>
         </div>
-
-        <div class="figure-container" style="margin-top: 2rem;">
-            <h3>Clinical Implications</h3>
-            <p style="line-height: 1.8; margin-top:1.5rem;">
-                Our deep learning approach demonstrates significant clinical potential for rapid AMR screening. The model's high sensitivity ensures minimal false negatives—critical for preventing treatment failures—while maintaining specificity to reduce unnecessary broad-spectrum antibiotic use. Key clinical advantages include:
-            </p>
-            <ul style="margin-top: 1rem; padding-left: 2rem; line-height: 1.8;">
-                <li>Reduction in diagnostic time from days/weeks to hours</li>
-                <li>Independence from existing resistance gene databases</li>
-                <li>Potential for novel resistance mechanism discovery</li>
-                <li>Scalable deployment across diverse clinical settings</li>
-            </ul>
-        </div>
-
-        <div class="species-grid">
-            <div class="species-card">
-                <div class="species-name">Model Performance Summary</div>
-                <div class="species-stats">
-                    <div class="species-stat">
-                        <label>Best Performing Species:</label>
-                        <value>[TO BE UPDATED] ([TBD]%)</value>
-                    </div>
-                    <div class="species-stat">
-                        <label>Most Challenging Species:</label>
-                        <value>[TO BE UPDATED] ([TBD]%)</value>
-                    </div>
-                    <div class="species-stat">
-                        <label>Species-Agnostic Accuracy:</label>
-                        <value>[TBD]%</value>
-                    </div>
-                    <div class="species-stat">
-                        <label>Cross-Validation Stability:</label>
-                        <value>[TBD] (CV < [TBD]%)</value>
-                    </div>
-                </div>
-            </div>
-            <div class="species-card">
-                <div class="species-name">Antibiotic Class Performance</div>
-                <div class="species-stats">
-                    <div class="species-stat">
-                        <label>[DRUG CLASS 1]:</label>
-                        <value>[TBD] ([TBD]%)</value>
-                    </div>
-                    <div class="species-stat">
-                        <label>[DRUG CLASS 2]:</label>
-                        <value>[TBD] ([TBD]%)</value>
-                    </div>
-                    <div class="species-stat">
-                        <label>[DRUG CLASS 3]:</label>
-                        <value>[TBD] ([TBD]%)</value>
-                    </div>
-                    <div class="species-stat">
-                        <label>[DRUG CLASS 4]:</label>
-                        <value>[TBD] ([TBD]%)</value>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
+    
+      <!-- Clinical implications -->
+      <div class="figure-container" style="margin-top: 2rem">
+        <h3>Clinical Implications</h3>
+        <p style="line-height: 1.8; margin-top: 1.5rem">
+          Our deep learning approach demonstrates significant clinical potential for
+          rapid AMR screening. The model's high sensitivity ensures minimal false
+          negatives—critical for preventing treatment failures—while maintaining
+          specificity to reduce unnecessary broad-spectrum antibiotic use. Key
+          clinical advantages include:
+        </p>
+        <ul style="margin-top: 1rem; padding-left: 2rem; line-height: 1.8">
+          <li>Reduction in diagnostic time from days/weeks to hours</li>
+          <li>Independence from existing resistance gene databases</li>
+          <li>Potential for novel resistance mechanism discovery</li>
+          <li>Scalable deployment across diverse clinical settings</li>
+        </ul>
+      </div>
+    
+      <!-- General Model Tables -->
+      <div class="figure-container">
+        <h3>General Model Results</h3>
+        <div id="general-model-tables"></div>
+      </div>
+    
+      <!-- Salmonella Model Tables -->
+      <div class="figure-container">
+        <h3>Salmonella Model Results</h3>
+        <div id="salmonella-model-tables"></div>
+      </div>
+    
+      <!-- Figures -->
+      <div class="figure-container">
+        <h3>Confusion Matrices and Coverage Plots</h3>
+        <div class="fcgr-grid" id="results-images"></div>
+      </div>
     </section>
+    
+    <!-- PapaParse for CSV parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script>
+      // Helper: render CSV into a styled table with caption
+      function renderCSV(file, containerId, captionText) {
+        Papa.parse(file, {
+          download: true,
+          header: true,
+          complete: function (results) {
+            if (results.data.length > 0) {
+              const table = document.createElement("table");
+              table.classList.add("data-table");
+    
+              // Header
+              const thead = document.createElement("thead");
+              const headerRow = document.createElement("tr");
+              results.meta.fields.forEach((field) => {
+                const th = document.createElement("th");
+                th.textContent = field;
+                headerRow.appendChild(th);
+              });
+              thead.appendChild(headerRow);
+              table.appendChild(thead);
+    
+              // Body
+              const tbody = document.createElement("tbody");
+              results.data.forEach((row) => {
+                if (Object.values(row).some((v) => v !== "")) {
+                  const tr = document.createElement("tr");
+                  results.meta.fields.forEach((field) => {
+                    const td = document.createElement("td");
+                    td.textContent = row[field];
+                    tr.appendChild(td);
+                  });
+                  tbody.appendChild(tr);
+                }
+              });
+              table.appendChild(tbody);
+    
+              // Caption
+              const caption = document.createElement("div");
+              caption.classList.add("figure-caption");
+              caption.innerHTML = `<strong>${captionText}</strong>`;
+    
+              // Wrap
+              const wrapper = document.createElement("div");
+              wrapper.style.marginBottom = "2rem";
+              wrapper.appendChild(table);
+              wrapper.appendChild(caption);
+    
+              document.getElementById(containerId).appendChild(wrapper);
+            }
+          },
+        });
+      }
+    
+      // === General Model CSVs with labels ===
+      renderCSV(
+        "Results/General Model/Cross_Validation_Metrics_Mean_per_class.csv",
+        "general-model-tables",
+        "Table 1. Cross-validation mean metrics per class (General Model)"
+      );
+      renderCSV(
+        "Results/General Model/Cross_Validation_Metrics_SD_per_class.csv",
+        "general-model-tables",
+        "Table 2. Cross-validation standard deviation per class (General Model)"
+      );
+      renderCSV(
+        "Results/General Model/Cross_Validation_Metrics_summary.csv",
+        "general-model-tables",
+        "Table 3. Cross-validation summary metrics (General Model)"
+      );
+      renderCSV(
+        "Results/General Model/Test_Metrics.csv",
+        "general-model-tables",
+        "Table 4. Test set overall metrics (General Model)"
+      );
+      renderCSV(
+        "Results/General Model/Test_Metrics_per_class.csv",
+        "general-model-tables",
+        "Table 5. Test set metrics per antibiotic class (General Model)"
+      );
+      renderCSV(
+        "Results/General Model/Test_Metrics_per_species.csv",
+        "general-model-tables",
+        "Table 6. Test set metrics per species (General Model)"
+      );
+    
+      // === Salmonella Model CSVs with labels ===
+      renderCSV(
+        "Results/Salmonella Enterica/Cross_Validation_Metrics_Mean_per_class.csv",
+        "salmonella-model-tables",
+        "Table 7. Cross-validation mean metrics per class (Salmonella Model)"
+      );
+      renderCSV(
+        "Results/Salmonella Enterica/Cross_Validation_Metrics_SD_per_class.csv",
+        "salmonella-model-tables",
+        "Table 8. Cross-validation standard deviation per class (Salmonella Model)"
+      );
+      renderCSV(
+        "Results/Salmonella Enterica/Cross_Validation_Metrics_summary.csv",
+        "salmonella-model-tables",
+        "Table 9. Cross-validation summary metrics (Salmonella Model)"
+      );
+      renderCSV(
+        "Results/Salmonella Enterica/Test_Metrics.csv",
+        "salmonella-model-tables",
+        "Table 10. Test set overall metrics (Salmonella Model)"
+      );
+      renderCSV(
+        "Results/Salmonella Enterica/Test_Metrics_per_class.csv",
+        "salmonella-model-tables",
+        "Table 11. Test set metrics per antibiotic class (Salmonella Model)"
+      );
+    
+      // === Figures with manual labels ===
+      const figureLabels = {
+        "Results/General Model/Label_Coverage.png":
+          "Figure 6. Label coverage distribution (General Model)",
+        "Results/Salmonella Enterica/Label_Coverage.png":
+          "Figure 7. Label coverage distribution (Salmonella Model)",
+        "Results/General Model/Confusion Matrices/Cross_Validation_Metrics_Mean_per_class.png":
+          "Figure 8. Confusion matrix (mean per class, General Model)",
+        "Results/Salmonella Enterica/Confusion Matrices/Cross_Validation_Metrics_Mean_per_class.png":
+          "Figure 9. Confusion matrix (mean per class, Salmonella Model)",
+      };
+    
+      const imgContainer = document.getElementById("results-images");
+      Object.keys(figureLabels).forEach((file) => {
+        const div = document.createElement("div");
+        div.classList.add("fcgr-item");
+        div.innerHTML = `
+          <img src="${file}" alt="${figureLabels[file]}" style="width:100%; border:1px solid var(--border-color)" />
+          <p class="fcgr-label">${figureLabels[file]}</p>
+        `;
+        imgContainer.appendChild(div);
+      });
+    </script>
 
     <!-- Data Section -->
     <section id="data">
@@ -1172,22 +1437,21 @@
             </div>
             <div class="method-step">
                 <h4>Hardware Requirements</h4>
-                <p><strong>Training:</strong> NVIDIA GPU with ≥8GB VRAM</p>
-                <p><strong>Memory:</strong> 16GB RAM minimum, 32GB recommended</p>
-                <p><strong>Storage:</strong> 500GB for full dataset processing</p>
+                <p><strong>Training:</strong> Google Colab T4 GPU, 2vCPU @ 2.2GHz </p>
+                <p><strong>Memory:</strong> 13GB RAM </p>
+                <p><strong>Storage:</strong> 100GB </p>
             </div>
             <div class="method-step">
                 <h4>Performance Metrics</h4>
                 <p><strong>Masked Evaluation:</strong> Accuracy, Precision, Recall, F1-score</p>
                 <p><strong>Advanced Metrics:</strong> AUC, MCC, Jaccard Index, Hamming Loss</p>
-                <p><strong>Cross-Validation:</strong> 5-fold GroupKFold with homology awareness</p>
+                <p><strong>Cross-Validation:</strong> 5-fold GroupKFold with homology aware splitting, preformed via sourmash</p>
             </div>
         </div>
 
         <div class="publication-links">
-            <a href="#" class="pub-link">View Code Repository</a>
-            <a href="#" class="pub-link secondary">Download Processed Data</a>
-            <a href="#" class="pub-link secondary">Access Docker Container</a>
+            <a href="https://github.com/XHCFS/amr-fgcr-prediction-project" class="pub-link">View Code Repository</a>
+            <a href="" class="pub-link secondary">Download Processed Data</a>
         </div>
     </section>
 
@@ -1195,7 +1459,9 @@
     <section id="team">
         <div class="section-header">
             <h2 class="section-title">Research Team</h2>
-            <p class="section-subtitle">Interdisciplinary collaboration in computational biology and machine learning</p>
+                <p class="section-subtitle">
+                  Collaboration between Communications and Information Engineering majors with extensive coursework in machine learning and deep learning, combined with an interest in bioinformatics. Additional technical consultancy was provided by a colleague from the Biomedical Engineering department.
+                </p>        
         </div>
 
         <div class="team-grid">
@@ -1225,7 +1491,7 @@
         <div class="figure-container" style="margin-top: 3rem;">
             <h3>Acknowledgments</h3>
             <p style="line-height: 1.8;">
-                We thank Zewail City of Science and Technology for providing computational resources and research infrastructure. We acknowledge the original authors of the datasets used in this study and the open-source community for developing the tools and libraries that made this research possible. Special recognition goes to the maintainers of NCBI and PATRIC databases for their commitment to open scientific data sharing.
+                ADD HERE
             </p>
             
             <div style="margin-top: 2rem; padding: 1.5rem; background: var(--bg-color); border-left: 4px solid var(--primary-color);">
@@ -1253,20 +1519,21 @@
 
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-institution">Zewail City of Science and Technology</div>
-            <p>Department of Biomedical Engineering</p>
-            <div class="footer-links">
-                <a href="https://zewailcity.edu.eg/">University Website</a>
-                <a href="#">Contact Research Team</a>
-                <a href="#">Research Ethics</a>
-                <a href="#">Data Sharing Policy</a>
-            </div>
-            <div class="footer-copyright">
-                © 2025 Zewail City of Science and Technology. This research is conducted under open science principles. 
-                All datasets and code are made freely available for scientific and educational purposes.
-            </div>
+      <div class="footer-content">
+        <div class="footer-institution">Independent Research Project</div>
+        <p>Conducted by <strong>Saifelden Mohamed</strong> and <strong>Salma Hatem</strong></p>
+        <div class="footer-links">
+          <a href="#">Contact Research Team</a>
+          <a href="#">Research Ethics</a>
+          <a href="#">Data Sharing Policy</a>
+          <a href="https://github.com/your-repo">GitHub Repository</a>
         </div>
+        <div class="footer-copyright">
+          © 2025 Saifelden Mohamed &amp; Salma Hatem.  
+          This research is conducted under open science principles.  
+          All datasets and code are made freely available for scientific and educational purposes.
+        </div>
+      </div>
     </footer>
 </body>
 </html>
