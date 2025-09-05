@@ -1,4 +1,5 @@
-,Tetracycline (R+I)/S Ratio,Gentamicin (R+I)/S Ratio
-Staphylococcus aureus,0.7566241413150148,0.6350877192982456
-Salmonella enterica,1.2436010591350397,0.1575591985428051
-Escherichia coli,2.1574074074074074,0.21508097165991902
+Sepecies,Tetracycline (R+I)/S Ratio,Gentamicin (R+I)/S Ratio
+Staphylococcus aureus,0.756624141,0.635087719
+Salmonella enterica,1.243601059,0.157559199
+Escherichia coli,2.157407407,0.215080972
+Overall,1.126436782,0.245205115

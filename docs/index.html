@@ -1478,6 +1478,22 @@
           header: true,
           complete: function (results) {
             if (results.data.length === 0) return;
+
+            results.data = results.data.map(row => {
+            const newRow = {};
+            for (const key in row) {
+              const value = row[key];
+              const num = parseFloat(value);
+
+              // Check if value is a number and not an integer
+              if (!isNaN(num) && value.trim() !== "" && !Number.isInteger(num)) {
+                newRow[key] = num.toFixed(3); // round float to 3 decimals
+              } else {
+                newRow[key] = value; // keep integers and strings unchanged
+              }
+            }
+            return newRow;
+          });
             
             const container = document.getElementById(containerId);
             const wrapper = document.createElement("div");
@@ -1500,7 +1516,8 @@
               renderInfoBoxes(results.data, wrapper);
             } else if (numCols <= 3 && numRows > 3) {
               // Transpose narrow tables
-              renderTransposedTable(results, wrapper);
+              //renderTransposedTable(results, wrapper);
+              renderRegularTable(results, wrapper);
             } else if (numCols > 6 || (numCols * numRows > 50)) {
               // Scrollable for large tables
               renderScrollableTable(results, wrapper);
@@ -1650,15 +1667,15 @@
       const generalEDAFiles = {
         "eda_results/general_model_label_ratio_per_species.csv": "Label ratio per species",
         "eda_results/general_model_null_percentages_per_species.csv": "Null percentages per species", 
-        "eda_results/general_model_overall_label_ratio.csv": "Overall label ratio",
-        "eda_results/general_model_overall_null_percentages.csv": "Overall null percentages",
+        //"eda_results/general_model_overall_label_ratio.csv": "Overall label ratio",
+        //"eda_results/general_model_overall_null_percentages.csv": "Overall null percentages",
         "eda_results/general_model_species_distribution.csv": "Species distribution"
       };
 
       const salmonellaEDAFiles = {
         "eda_results/salmonella_only_label_ratio_per_drug.csv": "Label ratio per antibiotic",
         "eda_results/salmonella_only_null_percentages_per_drug.csv": "Null percentages per antibiotic",
-        "eda_results/salmonella_only_overall_null_percentage.csv": "Overall null percentage summary"
+        //"eda_results/salmonella_only_overall_null_percentage.csv": "Overall null percentage summary"
       };
 
       // Render EDA tables in Methods section

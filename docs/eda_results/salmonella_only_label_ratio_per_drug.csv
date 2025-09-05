@@ -1,2 +1,9 @@
-,Tetracycline,Ampicillin,Amoxicillin-Clavulanic acid,Cefoxitin,Ceftiofur,Gentamicin,Ceftriaxone,Chloramphenicol
-(R+I)/S Ratio,1.2436010591350397,0.426887454392366,0.26973026973026976,0.17115871918912692,0.1668579297681891,0.1575591985428051,0.12155305537171851,0.0506302955156024
+Drug,(R+I)/S Ratio
+Tetracycline,1.243601059
+Ampicillin,0.426887454
+Amoxicillin-Clavulanic acid,0.26973027
+Cefoxitin,0.171158719
+Ceftiofur,0.16685793
+Gentamicin,0.157559199
+Ceftriaxone,0.121553055
+Chloramphenicol,0.050630296

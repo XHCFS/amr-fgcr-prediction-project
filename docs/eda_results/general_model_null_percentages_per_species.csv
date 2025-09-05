@@ -1,4 +1,5 @@
-,Tetracycline,Gentamicin
-Staphylococcus aureus,30.15996878657823,27.27272727272727
-Salmonella enterica,0.0,0.0
-Escherichia coli,85.97861842105263,1.274671052631579
+Species,Tetracycline,Gentamicin
+Staphylococcus aureus,30.15996879,27.27272727
+Salmonella enterica,0,0
+Escherichia coli,85.97861842,1.274671053
+Overall,28.41551741,7.242782022
