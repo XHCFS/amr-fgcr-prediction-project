@@ -1690,33 +1690,33 @@
       });
 
       // === RESULTS TABLES - Results Section ===
-      const generalResultsFiles = {
-        "Results/General Model/Test_Metrics.csv": "Test set overall metrics",
-        "Results/General Model/Test_Metrics_per_class.csv": "Test set metrics per antibiotic class",
-        "Results/General Model/Test_Metrics_per_species.csv": "Test set metrics per species",
-        "Test_Metrics_per_class_Escherichia_Coli.csv" : "Test set metrics per antibiotic class for Escherichia Coli samples",
-        "Test_Metrics_per_class_Salmonella_Enterica.csv" : "Test set metrics per antibiotic class for Salmonella Enterica samples",
-        "Test_Metrics_per_class_Staphylococcus_Aureus.csv" : "Test set metrics per antibiotic class for Staphylococcus Aureus samples",
-        "Results/General Model/Cross_Validation_Metrics_Mean_per_class.csv": "Cross-validation mean metrics per class",
-        "Results/General Model/Cross_Validation_Metrics_SD_per_class.csv": "Cross-validation standard deviation per class",
-        "Results/General Model/Cross_Validation_Metrics_summary.csv": "Cross-validation summary metrics",
-      };
+      const generalResultsFiles = [
+        ["Results/General Model/Test_Metrics.csv", "Test set overall metrics"],
+        ["Results/General Model/Test_Metrics_per_class.csv", "Test set metrics per antibiotic class"],
+        ["Results/General Model/Test_Metrics_per_species.csv", "Test set metrics per species"],
+        ["Results/General Model/Test_Metrics_per_class_Salmonella_Enterica.csv", "Test set metrics per antibiotic class for Salmonella Enterica samples"],
+        ["Results/General Model/Test_Metrics_per_class_Staphylococcus_Aureus.csv", "Test set metrics per antibiotic class for Staphylococcus Aureus samples"],
+        ["Results/General Model/Test_Metrics_per_class_Escherichia_Coli.csv", "Test set metrics per antibiotic class for Escherichia Coli samples"],
+        ["Results/General Model/Cross_Validation_Metrics_Mean_per_class.csv", "Cross-validation mean metrics per class"],
+        ["Results/General Model/Cross_Validation_Metrics_SD_per_class.csv", "Cross-validation standard deviation per class"],
+        ["Results/General Model/Cross_Validation_Metrics_summary.csv", "Cross-validation summary metrics"]
+      ];
 
-      const salmonellaResultsFiles = {
-        "Results/Salmonella Enterica/8-mer/Test_Metrics.csv": "Test set overall metrics",
-        "Results/Salmonella Enterica/8-mer/Test_Metrics_per_class.csv": "Test set metrics per antibiotic class",
-        "Results/Salmonella Enterica/8-mer/Cross_Validation_Metrics_Mean_per_class.csv": "Cross-validation mean metrics per class",
-        "Results/Salmonella Enterica/8-mer/Cross_Validation_Metrics_SD_per_class.csv": "Cross-validation standard deviation per class", 
-        "Results/Salmonella Enterica/8-mer/Cross_Validation_Metrics_summary.csv": "Cross-validation summary metrics",
-      };
+      const salmonellaResultsFiles = [
+        ["Results/Salmonella Enterica/8-mer/Test_Metrics.csv", "Test set overall metrics"],
+        ["Results/Salmonella Enterica/8-mer/Test_Metrics_per_class.csv", "Test set metrics per antibiotic class"],
+        ["Results/Salmonella Enterica/8-mer/Cross_Validation_Metrics_Mean_per_class.csv", "Cross-validation mean metrics per class"],
+        ["Results/Salmonella Enterica/8-mer/Cross_Validation_Metrics_SD_per_class.csv", "Cross-validation standard deviation per class"],
+        ["Results/Salmonella Enterica/8-mer/Cross_Validation_Metrics_summary.csv", "Cross-validation summary metrics"]
+      ];
 
       // Render Results tables in Results section
-      Object.keys(generalResultsFiles).forEach((file) => {
-        renderSmartTable(file, "general-model-results-tables", generalResultsFiles[file], generalResultsFiles[file]);
+      generalResultsFiles.forEach(([file, description]) => {
+        renderSmartTable(file, "general-model-results-tables", description, description);
       });
 
-      Object.keys(salmonellaResultsFiles).forEach((file) => {
-        renderSmartTable(file, "salmonella-model-results-tables", salmonellaResultsFiles[file], salmonellaResultsFiles[file]);
+      salmonellaResultsFiles.forEach(([file, description]) => {
+        renderSmartTable(file, "salmonella-model-results-tables", description, description);
       });
 
       // === FCGR SAMPLE IMAGES ===
