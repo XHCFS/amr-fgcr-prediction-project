@@ -441,6 +441,8 @@
         }
         
         .data-table th {
+            white-space: normal;
+            /* word-break: break-word; */
             padding: 1rem;
             text-align: left;
             font-weight: 600;
@@ -887,7 +889,7 @@
                       <strong>species-agnostic model</strong> trained on
                       <em>Staphylococcus aureus</em>, <em>Salmonella enterica</em>, and
                       <em>Escherichia coli</em> for Gentamicin and Tetracycline resistance,
-                      achieving an overall AUC of <strong>93%</strong>. The latter model
+                      achieving an overall AUC of <strong>84%</strong>. The latter model
                       operates without species labels, suggesting it learns
                       species-independent genomic biomarkers of resistance. Despite sparse
                       data for <em>E. coli</em> (85% missing labels for Gentamicin), the
@@ -918,7 +920,7 @@
                 <div class="metric-label">Antibiotics Tested</div>
               </div>
               <div class="metric-item">
-                <div class="metric-value">84%</div>
+                <div class="metric-value">90%</div>
                 <div class="metric-label">Overall AUC</div>
               </div>
             </div>
@@ -940,7 +942,7 @@
                 <div class="metric-label">Antibiotics Tested (Gentamicin, Tetracycline)</div>
               </div>
               <div class="metric-item">
-                <div class="metric-value">93%</div>
+                <div class="metric-value">84%</div>
                 <div class="metric-label">Overall AUC</div>
               </div>
             </div>
@@ -1047,7 +1049,7 @@
           <h4>Salmonella-Specific Model</h4>
           <p>
             The Salmonella-only model was trained on 8 antibiotics and achieved an
-            overall AUC of ~85%. Performance varied across antibiotics but remained
+            overall AUC of ~90%. Performance varied across antibiotics but remained
             robust despite dataset imbalance.
           </p>
         </div>
@@ -1055,7 +1057,7 @@
           <h4>Species-Agnostic Model</h4>
           <p>
             The general model trained on 10,079 genomes across 3 species achieved an
-            overall AUC of ~93%. Despite sparse data for <em>E. coli</em> (85% null
+            overall AUC of 84%. Despite sparse data for <em>E. coli</em> (85% null
             labels for Gentamicin), the model maintained strong predictive
             performance, suggesting it learns cross-species biomarkers of
             resistance.
@@ -1376,7 +1378,7 @@
             <div class="method-step">
                 <h4>Performance Metrics</h4>
                 <p><strong>Masked Evaluation:</strong> Accuracy, Precision, Recall, F1-score</p>
-                <p><strong>Advanced Metrics:</strong> AUC, MCC, Jaccard Index, Hamming Loss</p>
+                <p><strong>Advanced Metrics:</strong> AUC, MCC, Jaccard Index</p>
                 <p><strong>Cross-Validation:</strong> 5-fold GroupKFold with homology aware splitting, preformed via sourmash</p>
             </div>
         </div>
@@ -1689,20 +1691,23 @@
 
       // === RESULTS TABLES - Results Section ===
       const generalResultsFiles = {
+        "Results/General Model/Test_Metrics.csv": "Test set overall metrics",
+        "Results/General Model/Test_Metrics_per_class.csv": "Test set metrics per antibiotic class",
+        "Results/General Model/Test_Metrics_per_species.csv": "Test set metrics per species",
+        "Test_Metrics_per_class_Escherichia_Coli.csv" : "Test set metrics per antibiotic class for Escherichia Coli samples",
+        "Test_Metrics_per_class_Salmonella_Enterica.csv" : "Test set metrics per antibiotic class for Salmonella Enterica samples",
+        "Test_Metrics_per_class_Staphylococcus_Aureus.csv" : "Test set metrics per antibiotic class for Staphylococcus Aureus samples",
         "Results/General Model/Cross_Validation_Metrics_Mean_per_class.csv": "Cross-validation mean metrics per class",
         "Results/General Model/Cross_Validation_Metrics_SD_per_class.csv": "Cross-validation standard deviation per class",
         "Results/General Model/Cross_Validation_Metrics_summary.csv": "Cross-validation summary metrics",
-        "Results/General Model/Test_Metrics.csv": "Test set overall metrics",
-        "Results/General Model/Test_Metrics_per_class.csv": "Test set metrics per antibiotic class",
-        "Results/General Model/Test_Metrics_per_species.csv": "Test set metrics per species"
       };
 
       const salmonellaResultsFiles = {
-        "Results/Salmonella Enterica/Cross_Validation_Metrics_Mean_per_class.csv": "Cross-validation mean metrics per class",
-        "Results/Salmonella Enterica/Cross_Validation_Metrics_SD_per_class.csv": "Cross-validation standard deviation per class", 
-        "Results/Salmonella Enterica/Cross_Validation_Metrics_summary.csv": "Cross-validation summary metrics",
-        "Results/Salmonella Enterica/Test_Metrics.csv": "Test set overall metrics",
-        "Results/Salmonella Enterica/Test_Metrics_per_class.csv": "Test set metrics per antibiotic class"
+        "Results/Salmonella Enterica/8-mer/Test_Metrics.csv": "Test set overall metrics",
+        "Results/Salmonella Enterica/8-mer/Test_Metrics_per_class.csv": "Test set metrics per antibiotic class",
+        "Results/Salmonella Enterica/8-mer/Cross_Validation_Metrics_Mean_per_class.csv": "Cross-validation mean metrics per class",
+        "Results/Salmonella Enterica/8-mer/Cross_Validation_Metrics_SD_per_class.csv": "Cross-validation standard deviation per class", 
+        "Results/Salmonella Enterica/8-mer/Cross_Validation_Metrics_summary.csv": "Cross-validation summary metrics",
       };
 
       // Render Results tables in Results section
@@ -1774,7 +1779,7 @@
           label: "General Model - Label coverage distribution" 
         },
         { 
-          file: "Results/Salmonella Enterica/Label_Coverage.png", 
+          file: "Results/Salmonella Enterica/8-mer/Label_Coverage.png", 
           label: "Salmonella Model - Label coverage distribution" 
         },
         { 
@@ -1782,7 +1787,7 @@
           label: "General Model - Cross-validation confusion matrix" 
         },
         { 
-          file: "Results/Salmonella Enterica/Confusion Matrices/Cross_Validation_Metrics_Mean_per_class.png", 
+          file: "Results/Salmonella Enterica/8-mer/Confusion Matrices/Cross_Validation_Metrics_Mean_per_class.png", 
           label: "Salmonella Model - Cross-validation confusion matrix" 
         }
       ];
