@@ -1,0 +1,22 @@
+Train samples:       4452 (87.57%)
+Test samples:        632 (12.43%)
+
+Train clusters:      154
+Test clusters:        36
+
+Label coverage in test set:
+Label 0: Resistant (0) = 271, Sensitive (1) = 361
+Label 1: Resistant (0) = 171, Sensitive (1) = 461
+Label 2: Resistant (0) = 90, Sensitive (1) = 542
+Label 3: Resistant (0) = 51, Sensitive (1) = 581
+Label 4: Resistant (0) = 46, Sensitive (1) = 586
+Label 5: Resistant (0) = 63, Sensitive (1) = 569
+Label 6: Resistant (0) = 40, Sensitive (1) = 592
+Label coverage in train set:
+Label 0: Resistant (0) = 2547, Sensitive (1) = 1905
+Label 1: Resistant (0) = 1350, Sensitive (1) = 3102
+Label 2: Resistant (0) = 990, Sensitive (1) = 3462
+Label 3: Resistant (0) = 692, Sensitive (1) = 3760
+Label 4: Resistant (0) = 681, Sensitive (1) = 3771
+Label 5: Resistant (0) = 629, Sensitive (1) = 3823
+Label 6: Resistant (0) = 511, Sensitive (1) = 3941
