@@ -1178,56 +1178,115 @@
                     </div>
                     <div class="species-stat">
                         <label>Train/Val/Test Split:</label>
-                        <value>80% / 10% / 10%</value>
+                        <value>Roughly 80% / 10% / 10% (depending on cluster splitting)</value>
                     </div>
                 </div>
             </div>
             <div class="species-card">
-                <div class="species-name">Quality Control Metrics</div>
-                <div class="species-stats">
-                    <div class="species-stat">
-                        <label>Minimum Samples per Drug:</label>
-                        <value>[TO BE UPDATED]</value>
-                    </div>
-                    <div class="species-stat">
-                        <label>Class Balance Ratio:</label>
-                        <value>[TO BE UPDATED] (R:S)</value>
-                    </div>
-                    <div class="species-stat">
-                        <label>Minimum per Class:</label>
-                        <value>[TO BE UPDATED] entries each</value>
-                    </div>
-                    <div class="species-stat">
-                        <label>Missing Data Handling:</label>
-                        <value>Masked evaluation metrics</value>
-                    </div>
-                </div>
+            <div class="species-name">Quality Control Metrics</div>
+            <div class="species-stats">
+              <div class="species-stat">
+                <label>Species Included:</label>
+                <value>Salmonella enterica, Staphylococcus aureus, Escherichia coli</value>
+              </div>
+              <div class="species-stat">
+                <label>Null Score Threshold:</label>
+                <value>0.8</value>
+              </div>
+              <div class="species-stat">
+                <label>Drug Selection Criteria:</label>
+                <value>Drugs retained if null proportion ≤ threshold and above 0.1 R+I/S Ratio</value>
+              </div>
+              <div class="species-stat">
+                <label>Output Table:</label>
+                <value>{species}_Model_Table.csv</value>
+              </div>
+              <div class="species-stat">
+                <label>Missing Data Handling:</label>
+                <value>Rows dropped if all selected drugs are null</value>
+              </div>
+            </div>
             </div>
         </div>
 
         <div class="figure-container" style="margin-top: 2rem;">
-            <h3>Antibiotic Coverage</h3>
-            <p style="line-height: 1.8; margin: 1rem 0;">
-                Our final dataset encompasses [TO BE UPDATED] unique antibiotics across major therapeutic classes, providing comprehensive coverage of clinically relevant antimicrobial agents. The selection includes both first-line and reserve antibiotics, ensuring clinical applicability across diverse treatment scenarios.
-            </p>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
-                <div style="padding: 1rem; background: var(--bg-color); border-left: 3px solid var(--accent-color);">
-                    <strong>[DRUG CLASS 1]</strong><br>
-                    <small>[LIST TO BE UPDATED]</small>
-                </div>
-                <div style="padding: 1rem; background: var(--bg-color); border-left: 3px solid var(--accent-color);">
-                    <strong>[DRUG CLASS 2]</strong><br>
-                    <small>[LIST TO BE UPDATED]</small>
-                </div>
-                <div style="padding: 1rem; background: var(--bg-color); border-left: 3px solid var(--accent-color);">
-                    <strong>[DRUG CLASS 3]</strong><br>
-                    <small>[LIST TO BE UPDATED]</small>
-                </div>
-                <div style="padding: 1rem; background: var(--bg-color); border-left: 3px solid var(--accent-color);">
-                    <strong>[DRUG CLASS 4]</strong><br>
-                    <small>[LIST TO BE UPDATED]</small>
-                </div>
+          <h3>Antibiotic Coverage</h3>
+          <p style="line-height: 1.8; margin: 1rem 0;">
+            Our final dataset encompasses 8 unique antibiotics across multiple
+            therapeutic classes, providing comprehensive coverage of clinically
+            relevant antimicrobial agents. The selection includes both first-line and
+            reserve antibiotics, ensuring clinical applicability across diverse
+            treatment scenarios.
+          </p>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+              gap: 1rem;
+              margin-top: 1.5rem;
+            "
+          >
+            <div
+              style="
+                padding: 1rem;
+                background: var(--bg-color);
+                border-left: 3px solid var(--accent-color);
+              "
+            >
+              <strong>Tetracyclines</strong><br />
+              <small>Tetracycline</small>
             </div>
+            <div
+              style="
+                padding: 1rem;
+                background: var(--bg-color);
+                border-left: 3px solid var(--accent-color);
+              "
+            >
+              <strong>Penicillins</strong><br />
+              <small>Ampicillin</small>
+            </div>
+            <div
+              style="
+                padding: 1rem;
+                background: var(--bg-color);
+                border-left: 3px solid var(--accent-color);
+              "
+            >
+              <strong>Beta-lactam / Beta-lactamase Inhibitors</strong><br />
+              <small>Amoxicillin-Clavulanic Acid</small>
+            </div>
+            <div
+              style="
+                padding: 1rem;
+                background: var(--bg-color);
+                border-left: 3px solid var(--accent-color);
+              "
+            >
+              <strong>Cephalosporins</strong><br />
+              <small>Cefotaxime, Cefepime, Ceftazidime</small>
+            </div>
+            <div
+              style="
+                padding: 1rem;
+                background: var(--bg-color);
+                border-left: 3px solid var(--accent-color);
+              "
+            >
+              <strong>Aminoglycosides</strong><br />
+              <small>Gentamicin</small>
+            </div>
+            <div
+              style="
+                padding: 1rem;
+                background: var(--bg-color);
+                border-left: 3px solid var(--accent-color);
+              "
+            >
+              <strong>Amphenicols</strong><br />
+              <small>Chloramphenicol</small>
+            </div>
+          </div>
         </div>
     </section>
 
@@ -1377,7 +1436,7 @@
             </div>
             <div class="method-step">
                 <h4>Performance Metrics</h4>
-                <p><strong>Masked Evaluation:</strong> Accuracy, Precision, Recall, F1-score</p>
+                <p><strong>Masked Evaluation:</strong> Balanced Accuracy, Precision, Recall, F1-score</p>
                 <p><strong>Advanced Metrics:</strong> AUC, MCC, Jaccard Index</p>
                 <p><strong>Cross-Validation:</strong> 5-fold GroupKFold with homology aware splitting, preformed via sourmash</p>
             </div>
@@ -1433,20 +1492,6 @@
                 <p style="line-height: 1.8; margin-bottom: 1rem;">
                     This work contributes to the global effort to combat antimicrobial resistance through innovative computational approaches. By making our methods and data freely available, we aim to accelerate research in this critical area of public health.
                 </p>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem;">
-                    <div style="text-align: center; padding: 1rem;">
-                        <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary-color);">Open Source</div>
-                        <div style="font-size: 0.9rem; color: var(--text-secondary);">All code & data</div>
-                    </div>
-                    <div style="text-align: center; padding: 1rem;">
-                        <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary-color);">Reproducible</div>
-                        <div style="font-size: 0.9rem; color: var(--text-secondary);">Full workflow</div>
-                    </div>
-                    <div style="text-align: center; padding: 1rem;">
-                        <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary-color);">Scalable</div>
-                        <div style="font-size: 0.9rem; color: var(--text-secondary);">Multi-species</div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
